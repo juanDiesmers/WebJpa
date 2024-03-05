@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import co.ApplicationRepository.ApplicationRepository;
-import co.wiki.project.grupo12.wiki.entity.Application;
+import co.taller2.grupo12.grupo12.ApplicationRepository.ApplicationRepository;
+import co.taller2.grupo12.grupo12.entity.Application;
 
 @Controller
 public class FormController {
