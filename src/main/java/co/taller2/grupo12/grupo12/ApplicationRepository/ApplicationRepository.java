@@ -4,6 +4,6 @@ import org.springframework.data.repository.CrudRepository;
 
 import co.taller2.grupo12.grupo12.entity.Application;
 
-public interface ApplicationRepository extends CrudRepository<Application, Long> {
+    public interface ApplicationRepository extends CrudRepository<Application, Long> {
 
-}
+    }

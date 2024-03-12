@@ -84,6 +84,15 @@
                     <label for="new-password">Contraseña *</label>
                     <input type="password" id="new-password" required minlength="8">
                 </div>
+                <div class="form-group">
+                  <label for="user-type">Tipo de usuario:</label>
+                  <div id="user-type">
+                      <input type="radio" id="arrendador" name="user-type" value="arrendador" required>
+                      <label for="arrendador">Arrendador</label>
+                      <input type="radio" id="arrendatario" name="user-type" value="arrendatario" required>
+                      <label for="arrendatario">Arrendatario</label>
+                  </div>
+              </div>
             </div>
             <button class="login-btn" onclick="toggleForms()">Registrar</button>
           </div>
