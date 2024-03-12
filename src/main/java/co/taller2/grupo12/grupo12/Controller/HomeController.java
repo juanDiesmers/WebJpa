@@ -7,7 +7,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-@RequestMapping("/grupo12/plantilla")
+@RequestMapping("/grupo12")
 public class HomeController {
 
     @GetMapping("/Home")
@@ -15,28 +15,9 @@ public class HomeController {
         return "Home";
     }
 
-    @GetMapping("/1presentacion")
-    public String losPipolSoloTexto1() {
-        return "1presentacion";
-    }
-
-    @GetMapping("/2Encuesta")
+    @GetMapping("/Login")
     public ModelAndView losPipolTemplateModelAndView() {
-        return new ModelAndView("2Encuesta");
+        return new ModelAndView("Login");
     }
 
-    @GetMapping("/Resultado")
-    public String textoResultado() {
-        return "Resultado";
-    }
-
-    @GetMapping("/Requerimientos")
-    public String RequerimientosR() {
-        return "Requerimientos";
-    }
-
-    @GetMapping("/DescripcionProyecto")
-    public String DescripcionProyecto() {
-        return "DescripcionProyecto";
-    }
 }
