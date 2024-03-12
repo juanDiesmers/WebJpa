@@ -28,23 +28,23 @@ import lombok.Setter;
 @AllArgsConstructor
 @Where(clause = "status = 0")
 @SQLDelete(sql = "UPDATE application SET  status = 1 WHERE id=?")
-public class Solicitud {
+
+public class Comentario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id_solicitud;
 
+    private Date fecha;
+    private double calificacion;
+    private String comentario;
+
+    
     @ManyToOne
     @JoinColumn(name = "id_arrendatario", referencedColumnName = "id_arrendatario", unique=false, nullable=false)
     private Arrendatario arrendatario;
 
     @ManyToOne
-    @JoinColumn(name = "id_finca", referencedColumnName = "id_finca", unique=false, nullable=false)
-    private Finca finca;
-
-    @OneToMany(mappedBy = "solicitud")
-    private List<Pago> pagos = new ArrayList<Pago>();
-
-    private Date fecha;
-    private String estado;
+    @JoinColumn(name = "id_arrendador", referencedColumnName = "id_arrendador", unique=false, nullable=false)
+    private Arrendador arrendador;
 
 }

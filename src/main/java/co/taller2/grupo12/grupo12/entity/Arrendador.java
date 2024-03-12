@@ -38,4 +38,7 @@ public class Arrendador {
 
     @OneToMany(mappedBy = "arrendador")
     private List<Finca> fincas = new ArrayList<Finca>();
+
+    @OneToMany(mappedBy = "arrendador")
+    private List<Comentario> comentarios = new ArrayList<Comentario>();
 }
