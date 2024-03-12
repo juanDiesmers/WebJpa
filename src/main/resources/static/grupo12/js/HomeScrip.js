@@ -1,33 +1,47 @@
-// Función para mostrar el menú
-function mostrarMenu() {
-    const menu = document.querySelector('.menu');
-    menu.classList.add('mostrar');
-  }
-  
-  // Función para ocultar el menú
-  function ocultarMenu() {
-    const menu = document.querySelector('.menu');
-    menu.classList.remove('mostrar');
-  }
-  
-  // Selecciona el botón "Explorar"
-  const botonExplorar = document.querySelector('.button');
-  
-  // Selecciona el menú
-  const menu = document.querySelector('.menu');
-  
-  // Agrega un event listener para el evento "mouseenter" (pasar el ratón sobre el botón)
-  botonExplorar.addEventListener('mouseenter', mostrarMenu);
-  
-  // Agrega un event listener para el evento "mouseleave" (salir del área del menú)
-  menu.addEventListener('mouseleave', ocultarMenu);
-  
-  // Agrega un event listener para el evento "mouseleave" del botón (salir del área del botón)
-  botonExplorar.addEventListener('mouseleave', function(event) {
-    // Verifica si el mouse no está sobre el menú
-    const isMouseOutsideMenu = !menu.contains(event.relatedTarget);
-    if (isMouseOutsideMenu) {
-      ocultarMenu();
-    }
+const menuBtn = document.querySelector(".menu-btn");
+const menu = document.querySelector(".menu");
+const menuItems = document.querySelectorAll(".menu-item");
+
+gsap.registerPlugin(ScrollTrigger);
+
+const tl = gsap.timeline({ duration: 0.8, ease: "power3.out" });
+
+function openMenu() {
+  menu.classList.toggle("active");
+  document.body.classList.toggle("sidebar-open");
+
+  tl.to(menu, {
+    x: menu.classList.contains("active") ? "0" : "100%",
   });
-  
+
+  gsap.fromTo(
+    menuItems,
+    {
+      x: 150,
+    },
+    {
+      x: 0,
+      duration: 0.2,
+      stagger: 0.05,
+      ease: "power4.out",
+    }
+  );
+}
+
+gsap.to(menuBtn, {
+  scrollTrigger: {
+    trigger: document.documentElement,
+    start: 0,
+    end: window.innerHeight,
+    onLeave: () => {
+      gsap.to(menuBtn, { scale: 1 });
+    },
+    onEnterBack: () => {
+      gsap.to(menuBtn, { scale: 0 });
+    },
+  },
+  duration: 0.25,
+  ease: "power3.out",
+});
+
+menuBtn.addEventListener("click", openMenu);
