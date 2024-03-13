@@ -10,3 +10,4 @@ function toggleForms() {
       registerForm.style.display = 'block';
     }
   }
+

@@ -34,6 +34,7 @@ public class Arrendador {
     private String nombre;
     private String apellido;
     private String correo;
+    private String telefono;
     private String contrasena;
 
     @OneToMany(mappedBy = "arrendador")
@@ -41,4 +42,6 @@ public class Arrendador {
 
     @OneToMany(mappedBy = "arrendador")
     private List<Comentario> comentarios = new ArrayList<Comentario>();
+
+    
 }
