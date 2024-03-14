@@ -7,6 +7,7 @@ import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -31,10 +32,20 @@ public class Arrendador {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id_arrendador;
 
+
+    @Column
     private String nombre;
+    
+    @Column
     private String apellido;
+
+    @Column
     private String correo;
+
+    @Column
     private String telefono;
+
+    @Column
     private String contrasena;
 
     @OneToMany(mappedBy = "arrendador")

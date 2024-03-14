@@ -1,50 +1,47 @@
 package co.taller2.grupo12.grupo12.Controller;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import co.taller2.grupo12.grupo12.ApplicationRepository.ApplicationRepository;
-import co.taller2.grupo12.grupo12.entity.Application;
+import co.taller2.grupo12.grupo12.ApplicationRepository.ArrendadorRepository;
 
-@Controller
-public class FormController {
+import co.taller2.grupo12.grupo12.entity.Arrendador;
+import co.taller2.grupo12.grupo12.services.ArrendadorService;
 
-    private final ApplicationRepository applicationRepository;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
+
+
+@RestController
+
+@RequestMapping("/submit")
+
+public class FormController {    
 
     @Autowired
-    public FormController(ApplicationRepository applicationRepository) {
-        this.applicationRepository = applicationRepository;
+    private  ArrendadorService arrendadorService;
+
+    @CrossOrigin
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Arrendador> get() throws Exception{
+        return (List<Arrendador>) arrendadorService.getArrendador();
     }
 
-    // @SuppressWarnings("null")
-    @PostMapping("/submit")
-    public String handleSubmitForm(Application formData) {
-        // Obtener los datos del formulario
-        String nombres = formData.getName();
-        String apellidos = formData.getApellidos();
-        String correo = formData.getCorreo();
-        String descripcion = formData.getDescripcion();
-        int semestre = formData.getSemestre();
-        int edad = formData.getEdad();
-
-        // Crear una nueva instancia de Application con los datos del formulario
-        LocalDate fecha = formData.getFecha();
-        Application application = new Application();
-        application.setName(nombres);
-        application.setApellidos(apellidos);
-        application.setCorreo(correo);
-        application.setDescripcion(descripcion);
-        application.setSemestre(semestre);
-        application.setEdad(edad);
-        application.setFecha(fecha);
-
-        // Guardar la nueva instancia en la base de datos
-        this.applicationRepository.save(application);
-
-        // Redirigir a otra página
-        return "Resultado";
+    @PostMapping
+    public Arrendador guardarArrendador(@RequestBody Arrendador arrendador) {
+        return this.arrendadorService.guardarArrendador(arrendador);
     }
+    
+
 }
