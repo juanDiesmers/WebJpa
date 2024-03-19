@@ -40,6 +40,7 @@ function toggleForms() {
     .then(data => {
       console.log('Arrendador agregado:', data);
       // Aquí puedes realizar acciones adicionales después de agregar el arrendador, como redireccionar a otra página.
+      window.location.href = "/grupo12/login.html";
     })
     .catch(error => {
       console.error('Error al agregar arrendador:', error);

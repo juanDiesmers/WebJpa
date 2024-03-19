@@ -35,7 +35,7 @@ public class FormController {
     @CrossOrigin
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Arrendador> get() throws Exception{
-        return (List<Arrendador>) arrendadorService.getArrendador();
+        return (List<Arrendador>) arrendadorService.getArrendadores();
     }
 
     @PostMapping
