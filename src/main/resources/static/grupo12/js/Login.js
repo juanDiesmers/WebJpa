@@ -13,19 +13,19 @@ function toggleForms() {
 
 
   function registrarArrendador() {
-    const nombres = document.getElementById('new-firstname').value;
-    const apellidos = document.getElementById('new-lastname').value;
+    const nombre = document.getElementById('new-firstname').value;
+    const apellido = document.getElementById('new-lastname').value;
     const correo = document.getElementById('new-email').value;
     const telefono = document.getElementById('new-phone').value;
-    const contraseña = document.getElementById('new-password').value;
+    const contrasena = document.getElementById('new-password').value;
     const tipoUsuario = document.querySelector('input[name="user-type"]:checked').value;
   
     const arrendadorData = {
-      nombres: nombres,
-      apellidos: apellidos,
+      nombre: nombre,
+      apellido: apellido,
       correo: correo,
       telefono: telefono,
-      contraseña: contraseña,
+      contrasena: contrasena,
       tipoUsuario: tipoUsuario
     };
   
@@ -39,8 +39,7 @@ function toggleForms() {
     .then(response => response.json())
     .then(data => {
       console.log('Arrendador agregado:', data);
-      // Aquí puedes realizar acciones adicionales después de agregar el arrendador, como redireccionar a otra página.
-      window.location.href = "/grupo12/login.html";
+      window.location.href = "Login";
     })
     .catch(error => {
       console.error('Error al agregar arrendador:', error);

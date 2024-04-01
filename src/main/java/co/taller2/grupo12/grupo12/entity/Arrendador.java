@@ -24,14 +24,10 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Where(clause = "status = 0")
-@SQLDelete(sql = "UPDATE application SET  status = 1 WHERE id=?")
-
 public class Arrendador {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id_arrendador;
-
 
     @Column
     private String nombre;
@@ -53,6 +49,4 @@ public class Arrendador {
 
     @OneToMany(mappedBy = "arrendador")
     private List<Comentario> comentarios = new ArrayList<Comentario>();
-
-    
 }
