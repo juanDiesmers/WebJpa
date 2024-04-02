@@ -39,8 +39,6 @@ public class FormController {
 
     @PostMapping
     public Arrendador guardarArrendador(@RequestBody Arrendador arrendador) {
-        return this.arrendadorService.guardarArrendador(arrendador);
+        return arrendadorService.guardarArrendador(arrendador);
     }
-    
-
 }
