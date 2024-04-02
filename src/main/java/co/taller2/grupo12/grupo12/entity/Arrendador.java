@@ -28,25 +28,16 @@ public class Arrendador {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id_arrendador;
-
-    @Column
-    private String nombre;
     
-    @Column
+    private String nombre;
     private String apellido;
-
-    @Column
     private String correo;
-
-    @Column
     private String telefono;
-
-    @Column
     private String contrasena;
 
-    @OneToMany(mappedBy = "arrendador")
-    private List<Finca> fincas = new ArrayList<Finca>();
-
+    @OneToMany(mappedBy = "arrendador", cascade = CascadeType.ALL)
+    private List<Finca> fincas = new ArrayList<>();
+    
     @OneToMany(mappedBy = "arrendador")
     private List<Comentario> comentarios = new ArrayList<Comentario>();
 }

@@ -1,14 +1,14 @@
 package co.taller2.grupo12.grupo12.services;
 
 import co.taller2.grupo12.grupo12.DTOS.ArrendadorDTO;
+import co.taller2.grupo12.grupo12.DTOS.FincaDTO;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import org.apache.el.stream.Stream;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,10 +36,19 @@ public class ArrendadorService {
     @GetMapping
     public Iterable<ArrendadorDTO> getArrendadores() {
         Iterable<Arrendador> arrendadores = arrendadorRepository.findAll();
-        return StreamSupport.stream(arrendadores.spliterator(), false)
-            .map(arrendador -> modelMapper.map(arrendador, ArrendadorDTO.class))
-            .collect(Collectors.toList());
+        List<ArrendadorDTO> arrendadoresDTO = new ArrayList<>();
+        for (Arrendador arrendador : arrendadores) {
+            ArrendadorDTO arrendadorDTO = modelMapper.map(arrendador, ArrendadorDTO.class);
+            List<FincaDTO> fincasDTO = arrendador.getFincas().stream()
+                .map(finca -> modelMapper.map(finca, FincaDTO.class))
+                .collect(Collectors.toList());
+            arrendadorDTO.setFincas(fincasDTO);
+            arrendadoresDTO.add(arrendadorDTO);
+        }
+        return arrendadoresDTO;
     }
+    
+
 
     @PostMapping
     public Arrendador guardarArrendador(@RequestBody Arrendador arrendador) {

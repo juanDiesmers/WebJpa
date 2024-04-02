@@ -4,12 +4,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.FetchType;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.Where;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -28,15 +26,19 @@ import lombok.Setter;
 public class Finca {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id_finca;
+    private Long id_finca;
 
     private String nombre;
     private double precio;
 
-    @ManyToOne
-    @JoinColumn(name = "id_arrendador", referencedColumnName = "id_arrendador", unique=false, nullable=false)
+    @ManyToOne(fetch = FetchType.LAZY) // Un arrendador puede tener muchas fincas, pero una finca pertenece a un solo arrendador
+    @JoinColumn(name = "id_arrendador", referencedColumnName = "id_arrendador")
     private Arrendador arrendador;
 
+    @ManyToOne(fetch = FetchType.LAZY) // Un arrendatario puede arrendar varias fincas, pero una finca solo puede ser arrendada por un arrendatario
+    @JoinColumn(name = "id_arrendatario", referencedColumnName = "id_arrendatario")
+    private Arrendatario arrendatario;
+
     @OneToMany(mappedBy = "finca")
-    private List<Solicitud> solicitudes = new ArrayList<Solicitud>();
+    private List<Solicitud> solicitudes = new ArrayList<>();
 }

@@ -29,10 +29,4 @@ public class FincaDTO {
     private String nombre;
     private double precio;
 
-    @ManyToOne
-    @JoinColumn(name = "id_arrendador", referencedColumnName = "id_arrendador", unique=false, nullable=false)
-    private Arrendador arrendador;
-
-    @OneToMany(mappedBy = "finca")
-    private List<Solicitud> solicitudes = new ArrayList<Solicitud>();
 }
