@@ -11,6 +11,7 @@ import java.util.stream.StreamSupport;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -56,9 +57,17 @@ public class ArrendadorService {
     }
 
     @GetMapping("/{id}")
-    public Optional<Arrendador> getById(@PathVariable Long id) {
-        return arrendadorRepository.findById(id);
+public ResponseEntity<ArrendadorDTO> getById(@PathVariable Long id) {
+    Optional<Arrendador> arrendadorOptional = arrendadorRepository.findById(id);
+    
+    if (arrendadorOptional.isPresent()) {
+        Arrendador arrendador = arrendadorOptional.get();
+        ArrendadorDTO arrendadorDTO = modelMapper.map(arrendador, ArrendadorDTO.class);
+        return ResponseEntity.ok(arrendadorDTO);
+    } else {
+        return ResponseEntity.notFound().build();
     }
+}
 
     @PostMapping("/eliminar")
     public void eliminarArrendador(@RequestBody Arrendador arrendador) {
