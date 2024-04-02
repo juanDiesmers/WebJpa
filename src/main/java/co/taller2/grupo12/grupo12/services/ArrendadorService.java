@@ -4,7 +4,11 @@ import co.taller2.grupo12.grupo12.DTOS.ArrendadorDTO;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
+import org.apache.el.stream.Stream;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,8 +34,11 @@ public class ArrendadorService {
     ModelMapper modelMapper;
 
     @GetMapping
-    public Iterable<Arrendador> getArrendadores() {
-        return arrendadorRepository.findAll();
+    public Iterable<ArrendadorDTO> getArrendadores() {
+        Iterable<Arrendador> arrendadores = arrendadorRepository.findAll();
+        return StreamSupport.stream(arrendadores.spliterator(), false)
+            .map(arrendador -> modelMapper.map(arrendador, ArrendadorDTO.class))
+            .collect(Collectors.toList());
     }
 
     @PostMapping
