@@ -18,7 +18,7 @@
 		<java.version>17</java.version>
 		<spring-boot-admin.version>3.2.1</spring-boot-admin.version>
 		<sonar.host.url>http://sonarqube.dynaco.co/</sonar.host.url>
-		<sonar.login>sqp_c999ae45e7594a5b715147bb6b348de8ca2f5cfd</sonar.login>
+		<sonar.login>${SONARQUBE_TOKEN}</sonar.login>
 		<sonar.projectKey>WebJpa_grupo_1_2</sonar.projectKey> 
 		<sonar.projectName>WebJpa_grupo_1_2</sonar.projectName>
 		<sonar.projectVersion>1.0</sonar.projectVersion>
@@ -83,6 +83,16 @@
             	<groupId>org.sonarsource.scanner.maven</groupId>
             	<artifactId>sonar-maven-plugin</artifactId>
             	<version>3.7.0.1746</version>
+        	</plugin>
+		    <plugin>
+            	<groupId>org.codehaus.mojo</groupId>
+            	<artifactId>exec-maven-plugin</artifactId>
+            	<version>3.0.0</version>
+            	<configuration>
+                	<environmentVariables>
+                    	<SONARQUBE_TOKEN>${env.SONARQUBE_TOKEN}</SONARQUBE_TOKEN>
+                	</environmentVariables>
+            	</configuration>
         	</plugin>
 		</plugins>
 	</build>
