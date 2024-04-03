@@ -17,6 +17,11 @@
 	<properties>
 		<java.version>17</java.version>
 		<spring-boot-admin.version>3.2.1</spring-boot-admin.version>
+		<sonar.host.url>http://sonarqube.dynaco.co/</sonar.host.url>
+		<sonar.login>sqp_c999ae45e7594a5b715147bb6b348de8ca2f5cfd</sonar.login>
+		<sonar.projectKey>WebJpa_grupo_1_2</sonar.projectKey> 
+		<sonar.projectName>WebJpa_grupo_1_2</sonar.projectName>
+		<sonar.projectVersion>1.0</sonar.projectVersion>
 	</properties>
 	<dependencies>
 	<dependency>
@@ -74,6 +79,11 @@
 					</image>
 				</configuration>
 			</plugin>
+			<plugin>
+            	<groupId>org.sonarsource.scanner.maven</groupId>
+            	<artifactId>sonar-maven-plugin</artifactId>
+            	<version>3.7.0.1746</version>
+        	</plugin>
 		</plugins>
 	</build>
 
