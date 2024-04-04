@@ -65,7 +65,7 @@ class ArrendatarioControllerTest {
         when(arrendatarioService.obtenerTodosLosArrendatarios()).thenReturn(arrendatariosMock);
         // Llamar al método del controlador
         List<Arrendatario> resultado = arrendatarioController.obtenerTodosLosArrendatarios();
-        // Verificar el resultado
+        // Verificar el resultadoo
         assertNotNull(resultado);
         assertEquals(2, resultado.size()); // Verificar que se devuelvan todos los arrendatarios esperados
     }
