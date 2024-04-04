@@ -1,19 +1,24 @@
 package co.taller2.grupo12.grupo12.Controller;
 
 import co.taller2.grupo12.grupo12.DTOS.ArrendadorDTO;
-
+import co.taller2.grupo12.grupo12.entity.Arrendador;
+import co.taller2.grupo12.grupo12.entity.Arrendatario;
 import co.taller2.grupo12.grupo12.services.ArrendadorService;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @RestController
 @RequestMapping("/arrendadores")
 public class ArrendadorController {
-
+    
+    @Autowired
     private final ArrendadorService arrendadorService;
 
     public ArrendadorController(ArrendadorService arrendadorService) {
@@ -25,7 +30,7 @@ public class ArrendadorController {
         List<ArrendadorDTO> arrendadores = arrendadorService.getArrendadores();
         return ResponseEntity.ok(arrendadores);
     }
-
+    /* 
     @GetMapping("/{id}")
     public ResponseEntity<ArrendadorDTO> getArrendadorById(@PathVariable Long id) {
         ArrendadorDTO arrendador = arrendadorService.getArrendadorById(id);
@@ -34,6 +39,13 @@ public class ArrendadorController {
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+    */
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Arrendador> obtenerArrendadorPorId(@PathVariable Long id) {
+        Optional<Arrendador> arrendador = arrendadorService.obtenerArrendadorPorId(id);
+        return arrendador.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping

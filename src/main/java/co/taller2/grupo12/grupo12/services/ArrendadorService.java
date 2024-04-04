@@ -3,6 +3,7 @@ package co.taller2.grupo12.grupo12.services;
 import co.taller2.grupo12.grupo12.DTOS.ArrendadorDTO;
 import co.taller2.grupo12.grupo12.DTOS.FincaDTO;
 import co.taller2.grupo12.grupo12.entity.Arrendador;
+import co.taller2.grupo12.grupo12.entity.Arrendatario;
 import co.taller2.grupo12.grupo12.ApplicationRepository.ArrendadorRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -39,6 +40,10 @@ public class ArrendadorService {
                 return arrendadorDTO;
             })
             .collect(Collectors.toList());
+    }
+
+    public Optional<Arrendador> obtenerArrendadorPorId(Long id) {
+        return arrendadorRepository.findById(id);
     }
 
     public ArrendadorDTO getArrendadorById(Long id) {

@@ -40,7 +40,7 @@ class ArrendadorControllerTest {
     @InjectMocks
     ArrendadorController arrendadorController;
 
-    /*@Test
+    @Test
     void testObtenerArrendadoroPorId() {
         // Configurar objeto mock
         Arrendador arrendadorMock = new Arrendador();
@@ -51,7 +51,7 @@ class ArrendadorControllerTest {
         // Verificar el resultado
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertNotNull(response.getBody());
-    }*/
+    }
 
    
 }
