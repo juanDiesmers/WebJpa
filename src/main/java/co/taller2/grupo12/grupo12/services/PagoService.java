@@ -1,17 +1,17 @@
 package co.taller2.grupo12.grupo12.services;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
-
-import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import co.taller2.grupo12.grupo12.DTOS.PagoDTO;
 import co.taller2.grupo12.grupo12.entity.Pago;
 import co.taller2.grupo12.grupo12.ApplicationRepository.PagoRepository;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @Service
 public class PagoService {
@@ -48,7 +48,6 @@ public class PagoService {
             Pago existingPago = pagoOptional.get();
             existingPago.setFecha(pagoDTO.getFecha());
             existingPago.setValor(pagoDTO.getValor());
-            // Set other attributes if needed
             return convertToDTO(pagoRepository.save(existingPago));
         } else {
             return null;
@@ -60,10 +59,12 @@ public class PagoService {
     }
 
     private PagoDTO convertToDTO(Pago pago) {
-        return modelMapper.map(pago, PagoDTO.class);
+        PagoDTO pagoDTO = modelMapper.map(pago, PagoDTO.class);
+        return pagoDTO;
     }
 
     private Pago convertToEntity(PagoDTO pagoDTO) {
-        return modelMapper.map(pagoDTO, Pago.class);
+        Pago pago = modelMapper.map(pagoDTO, Pago.class);
+        return pago;
     }
 }
