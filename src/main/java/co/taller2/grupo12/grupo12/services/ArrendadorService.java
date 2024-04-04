@@ -80,6 +80,10 @@ public class ArrendadorService {
         return arrendadorRepository.save(arrendador);
     }
 
+    public List<Arrendador> obtenerTodosLosArrendadores() {
+        return (List<Arrendador>) arrendadorRepository.findAll();
+    }
+
     public Arrendador guardarArrendador(ArrendadorDTO arrendadorDTO) {
         // Crear una instancia de Arrendador a partir de los datos del DTO
         Arrendador arrendador = new Arrendador();
