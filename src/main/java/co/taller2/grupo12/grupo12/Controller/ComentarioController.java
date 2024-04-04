@@ -23,7 +23,6 @@ public class ComentarioController {
 
     private final ComentarioService comentarioService;
 
-    @Autowired
     public ComentarioController(ComentarioService comentarioService) {
         this.comentarioService = comentarioService;
     }

@@ -46,13 +46,13 @@ import java.util.Optional;
 @RunWith(MockitoJUnitRunner.class)
 class ArrendadorControllerTest {
 
-    @Mock
-    ArrendadorService arrendadorService;
+@Mock
+ArrendadorService arrendadorService;
 
     
 
-    @InjectMocks
-    ArrendadorController arrendadorController;
+@InjectMocks
+ArrendadorController arrendadorController;
 
    
 
@@ -103,6 +103,4 @@ class ArrendadorControllerTest {
         assertEquals(arrendatarioMock, response.getBody());
     }
 
-        
-   
 }

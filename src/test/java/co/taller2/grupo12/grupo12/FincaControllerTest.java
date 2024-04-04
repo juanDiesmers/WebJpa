@@ -1,6 +1,5 @@
 package co.taller2.grupo12.grupo12;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.mockito.*;
@@ -9,30 +8,20 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.TestPropertySource;
 
-import co.taller2.grupo12.grupo12.ApplicationRepository.ArrendatarioRepository;
-import co.taller2.grupo12.grupo12.Controller.ArrendatarioController;
 import co.taller2.grupo12.grupo12.Controller.FincaController;
-import co.taller2.grupo12.grupo12.DTOS.ArrendatarioDTO;
 import co.taller2.grupo12.grupo12.DTOS.FincaDTO;
-import co.taller2.grupo12.grupo12.entity.Arrendatario;
-import co.taller2.grupo12.grupo12.entity.Finca;
-import co.taller2.grupo12.grupo12.services.ArrendatarioService;
 import co.taller2.grupo12.grupo12.services.FincaService;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
 
 @SpringBootTest(
     webEnvironment = SpringBootTest.WebEnvironment.MOCK,
