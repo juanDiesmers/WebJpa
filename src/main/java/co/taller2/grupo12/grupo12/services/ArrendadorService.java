@@ -56,3 +56,4 @@ public class ArrendadorService {
         arrendadorRepository.deleteById(id);
     }
 }
+
