@@ -39,6 +39,7 @@ import java.util.List;
 import java.util.Optional;
 
 
+import org.modelmapper.ModelMapper;
 
 @SpringBootTest(
     webEnvironment = SpringBootTest.WebEnvironment.MOCK,
@@ -71,6 +72,50 @@ class ArrendadorControllerTest {
         // Verificar el resultado
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertNotNull(response.getBody());
+    }
+
+
+    @Test
+    void testCrearArrendadorConDTO() {
+        // Datos de prueba
+        ArrendadorDTO arrendadorDTO = new ArrendadorDTO();
+        arrendadorDTO.setNombre("Juan");
+        arrendadorDTO.setApellido("Perez");
+
+        //Crear mock
+        ArrendadorDTO arrendadorDTOMock = new ArrendadorDTO();
+        arrendadorDTOMock.setId_arrendador(1L);
+        arrendadorDTOMock.setNombre(arrendadorDTO.getNombre());
+        arrendadorDTOMock.setApellido(arrendadorDTO.getApellido());
+        
+        // Configurar el comportamiento esperado del método createArrendador() del servicio
+        when(arrendadorService.createArrendador(any(ArrendadorDTO.class))).thenReturn(arrendadorDTOMock);
+        
+        // Llamar al método del controlador
+        ResponseEntity<ArrendadorDTO> response = arrendadorController.createArrendador(arrendadorDTO);
+        
+        // Verificar el resultado
+        assertNotNull(response);
+        assertEquals(HttpStatus.CREATED, response.getStatusCode());
+        assertNotNull(response.getBody());
+        assertEquals(arrendadorDTOMock.getId_arrendador(), response.getBody().getId_arrendador());
+        assertEquals(arrendadorDTOMock.getNombre(), response.getBody().getNombre());
+        assertEquals(arrendadorDTOMock.getApellido(), response.getBody().getApellido());
+    }
+
+    @Test
+    void testCrearArrendador() {
+        // Datos de prueba
+        ArrendadorDTO arrendadorDTO = new ArrendadorDTO();
+        // Configurar objeto mock para el servicio
+        Arrendador arrendadorMock = new Arrendador();
+        // Configurar el comportamiento esperado del método crearArrendatario() del servicio
+        when(arrendadorService.crearArrendadorSIN(any(ArrendadorDTO.class))).thenReturn(arrendadorMock);
+        // Llamar al método del controlador
+        Arrendador resultado = arrendadorController.crearArrendador(arrendadorDTO);
+        // Verificar el resultado
+        assertNotNull(resultado);
+        // Si se espera algún procesamiento adicional o validaciones en el servicio, se pueden agregar más pruebas aquí
     }
 
 

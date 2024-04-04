@@ -63,12 +63,18 @@ public class ArrendadorController {
     }
 
 
-    @PostMapping
+    @PostMapping("/arrendadores")
     public ResponseEntity<ArrendadorDTO> createArrendador(@RequestBody ArrendadorDTO arrendadorDTO) {
         ArrendadorDTO createdArrendador = arrendadorService.createArrendador(arrendadorDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdArrendador);
     }
+    
+    @PostMapping("/crearArrendador")
+    public Arrendador crearArrendador(@RequestBody ArrendadorDTO arrendadorDTO) {
+        return arrendadorService.crearArrendadorSIN(arrendadorDTO);
+    }
 
+    
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteArrendador(@PathVariable Long id) {
         arrendadorService.deleteArrendador(id);

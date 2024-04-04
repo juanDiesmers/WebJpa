@@ -72,6 +72,16 @@ public class ArrendadorService {
         return modelMapper.map(savedArrendador, ArrendadorDTO.class);
     }
 
+
+    public Arrendador crearArrendadorSIN(ArrendadorDTO arrendadorDTO) {
+        Arrendador arrendador = new Arrendador();
+        arrendador.setNombre(arrendadorDTO.getNombre());
+        arrendador.setApellido(arrendadorDTO.getApellido());
+        arrendador.setCorreo(arrendadorDTO.getCorreo());
+        arrendador.setContrasena(arrendadorDTO.getContrasena());
+        return arrendadorRepository.save(arrendador);
+    }
+
     public List<Arrendador> obtenerTodosLosArrendadores() {
         return (List<Arrendador>) arrendadorRepository.findAll();
     }
