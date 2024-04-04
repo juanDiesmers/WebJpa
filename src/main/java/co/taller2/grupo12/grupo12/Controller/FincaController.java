@@ -44,4 +44,5 @@ public class FincaController {
     public void eliminarFinca(@PathVariable Long id) {
         fincaService.deleteFinca(id);
     }
+
 }
