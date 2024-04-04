@@ -17,12 +17,10 @@ import java.util.stream.StreamSupport;
 public class PagoService {
 
     private final PagoRepository pagoRepository;
-    private final ModelMapper modelMapper;
 
     @Autowired
-    public PagoService(PagoRepository pagoRepository, ModelMapper modelMapper) {
+    public PagoService(PagoRepository pagoRepository) {
         this.pagoRepository = pagoRepository;
-        this.modelMapper = modelMapper;
     }
 
     public List<PagoDTO> getAllPagos() {
@@ -48,6 +46,7 @@ public class PagoService {
             Pago existingPago = pagoOptional.get();
             existingPago.setFecha(pagoDTO.getFecha());
             existingPago.setValor(pagoDTO.getValor());
+            // Set other attributes if needed
             return convertToDTO(pagoRepository.save(existingPago));
         } else {
             return null;
@@ -59,12 +58,20 @@ public class PagoService {
     }
 
     private PagoDTO convertToDTO(Pago pago) {
-        PagoDTO pagoDTO = modelMapper.map(pago, PagoDTO.class);
+        PagoDTO pagoDTO = new PagoDTO();
+        pagoDTO.setId_pago(pago.getId_pago());
+        pagoDTO.setFecha(pago.getFecha());
+        pagoDTO.setValor(pago.getValor());
+        // Set other attributes if needed
         return pagoDTO;
     }
 
     private Pago convertToEntity(PagoDTO pagoDTO) {
-        Pago pago = modelMapper.map(pagoDTO, Pago.class);
+        Pago pago = new Pago();
+        pago.setId_pago(pagoDTO.getId_pago());
+        pago.setFecha(pagoDTO.getFecha());
+        pago.setValor(pagoDTO.getValor());
+        // Set other attributes if needed
         return pago;
     }
 }
