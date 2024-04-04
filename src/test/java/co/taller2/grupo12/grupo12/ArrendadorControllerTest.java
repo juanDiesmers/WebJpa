@@ -17,13 +17,12 @@ import co.taller2.grupo12.grupo12.services.ArrendadorService;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.Mockito.mock;
+
 import static org.mockito.Mockito.when;
 
-import java.util.ArrayList;
-import java.util.List;
+
 import java.util.Optional;
-import java.util.UUID;
+
 
 @SpringBootTest(
     webEnvironment = SpringBootTest.WebEnvironment.MOCK,
