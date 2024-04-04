@@ -22,8 +22,7 @@ import co.taller2.grupo12.grupo12.services.PagoService;
 public class PagoController {
 
     private final PagoService pagoService;
-
-    @Autowired
+    
     public PagoController(PagoService pagoService) {
         this.pagoService = pagoService;
     }
