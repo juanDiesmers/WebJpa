@@ -21,4 +21,18 @@ public class HomeController {
         return new ModelAndView("Login");
     }
 
+    @GetMapping("/1presentacion")
+    public ModelAndView losPipolTemplateModelAndView1() {
+        return new ModelAndView("1presentacion");
+    }
+
+    @GetMapping("/Requerimientos")
+    public ModelAndView losPipolTemplateModelAndView2() {
+        return new ModelAndView("Requerimientos");
+    }
+
+    @GetMapping("/DescripcionProyecto")
+    public ModelAndView losPipolTemplateModelAndView3() {
+        return new ModelAndView("DescripcionProyecto");
+    }
 }
