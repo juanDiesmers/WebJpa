@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import co.taller2.grupo12.grupo12.ApplicationRepository.ArrendadorRepository;
 import co.taller2.grupo12.grupo12.entity.Arrendador;
+
+
 import org.springframework.web.bind.annotation.RestController;
 
 
@@ -68,6 +70,10 @@ public ResponseEntity<ArrendadorDTO> getById(@PathVariable Long id) {
         return ResponseEntity.notFound().build();
     }
 }
+
+    public Optional<Arrendador> obtenerArrendadorPorId(Long id) {
+        return arrendadorRepository.findById(id);
+    }
 
     @PostMapping("/eliminar")
     public void eliminarArrendador(@RequestBody Arrendador arrendador) {
