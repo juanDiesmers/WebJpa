@@ -32,10 +32,12 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.verify;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
 
 
 @SpringBootTest(
@@ -44,15 +46,17 @@ import java.util.Optional;
 ) 
 @AutoConfigureMockMvc
 @RunWith(MockitoJUnitRunner.class)
+
+
 class ArrendadorControllerTest {
 
-@Mock
-ArrendadorService arrendadorService;
+    @Mock
+    ArrendadorService arrendadorService;
 
     
 
-@InjectMocks
-ArrendadorController arrendadorController;
+    @InjectMocks
+    ArrendadorController arrendadorController;
 
    
 
@@ -103,4 +107,17 @@ ArrendadorController arrendadorController;
         assertEquals(arrendatarioMock, response.getBody());
     }
 
+    @Test
+    void testEliminarArrendatarioExistente() {
+        // Datos de prueba
+        Long id = 1L;
+        // Llamar al método del controlador
+        ResponseEntity<Void> response = arrendadorController.deleteArrendador(id);
+        // Verificar el resultado
+        assertNotNull(response);
+        assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
+        // Verificar que el método eliminarArrendatarioPorId() del servicio haya sido llamado con el id adecuado
+        verify(arrendadorService).deleteArrendador(id);
+    }
+   
 }
