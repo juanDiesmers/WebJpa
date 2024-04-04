@@ -13,7 +13,7 @@ import java.util.Optional;
 
 
 @Service
-public class ArrendadorService {
+public class ArrendadorService{
     @Autowired
     private ArrendadorRepository arrendadorRepository;
 

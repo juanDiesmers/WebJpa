@@ -53,7 +53,5 @@ class ArrendadorControllerTest {
         assertNotNull(response.getBody());
     }
 
-
-
    
 }
