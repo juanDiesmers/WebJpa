@@ -41,4 +41,15 @@ public class Finca {
 
     @OneToMany(mappedBy = "finca")
     private List<Solicitud> solicitudes = new ArrayList<>();
+
+    @Override
+    public String toString() {
+        return "Finca{" +
+                "id_finca=" + id_finca +
+                ", nombre='" + nombre + '\'' +
+                ", precio=" + precio +
+                ", arrendador=" + (arrendador != null ? arrendador.getId_arrendador() : "null") +
+                ", arrendatario=" + (arrendatario != null ? arrendatario.getId_arrendatario() : "null") +
+                '}';
+    }
 }
