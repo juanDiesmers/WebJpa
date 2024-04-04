@@ -1,6 +1,7 @@
 package co.taller2.grupo12.grupo12.services;
 
 import co.taller2.grupo12.grupo12.DTOS.ArrendadorDTO;
+import co.taller2.grupo12.grupo12.DTOS.ArrendatarioDTO;
 import co.taller2.grupo12.grupo12.DTOS.FincaDTO;
 import co.taller2.grupo12.grupo12.entity.Arrendador;
 import co.taller2.grupo12.grupo12.entity.Arrendatario;
@@ -46,6 +47,20 @@ public class ArrendadorService {
         return arrendadorRepository.findById(id);
     }
 
+    public Arrendador actualizarArrendador(Long id, ArrendadorDTO arrendadorDTO) {
+        Optional<Arrendador> arrendadorOp = arrendadorRepository.findById(id);
+        if (arrendadorOp.isPresent()) {
+            Arrendador arrendador = arrendadorOp.get();
+            arrendador.setNombre(arrendadorDTO.getNombre());
+            arrendador.setApellido(arrendadorDTO.getApellido());
+            arrendador.setCorreo(arrendadorDTO.getCorreo());
+            arrendador.setContrasena(arrendadorDTO.getContrasena());
+            return arrendadorRepository.save(arrendador);
+        }
+        return null;
+    }
+
+
     public ArrendadorDTO getArrendadorById(Long id) {
         Optional<Arrendador> arrendadorOptional = arrendadorRepository.findById(id);
         return arrendadorOptional.map(arrendador -> modelMapper.map(arrendador, ArrendadorDTO.class)).orElse(null);
@@ -56,6 +71,21 @@ public class ArrendadorService {
         Arrendador savedArrendador = arrendadorRepository.save(arrendador);
         return modelMapper.map(savedArrendador, ArrendadorDTO.class);
     }
+
+    public List<Arrendador> obtenerTodosLosArrendadores() {
+        return (List<Arrendador>) arrendadorRepository.findAll();
+    }
+
+    public Arrendador guardarArrendador(ArrendadorDTO arrendadorDTO) {
+        // Crear una instancia de Arrendador a partir de los datos del DTO
+        Arrendador arrendador = new Arrendador();
+        arrendador.setNombre(arrendadorDTO.getNombre());
+        arrendador.setApellido(arrendadorDTO.getApellido());
+        
+        // Guardar el arrendador utilizando el repositorio
+        return arrendadorRepository.save(arrendador);
+    }
+
 
     public void deleteArrendador(Long id) {
         arrendadorRepository.deleteById(id);
