@@ -19,6 +19,6 @@ public class ArrendadorDTO {
     private String correo;
     private String telefono;
     private String contrasena;
-    private List<FincaDTO> fincas = new ArrayList<>();
+    private List<FincaDTO> fincas;
     private List<ComentarioDTO> comentarios = new ArrayList<>();
 }
