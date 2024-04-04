@@ -1,6 +1,7 @@
 package co.taller2.grupo12.grupo12.Controller;
 
 import co.taller2.grupo12.grupo12.DTOS.ArrendadorDTO;
+import co.taller2.grupo12.grupo12.DTOS.ArrendatarioDTO;
 import co.taller2.grupo12.grupo12.entity.Arrendador;
 import co.taller2.grupo12.grupo12.entity.Arrendatario;
 import co.taller2.grupo12.grupo12.services.ArrendadorService;
@@ -14,6 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 
+
 @RestController
 @RequestMapping("/arrendadores")
 public class ArrendadorController {
@@ -24,12 +26,18 @@ public class ArrendadorController {
     public ArrendadorController(ArrendadorService arrendadorService) {
         this.arrendadorService = arrendadorService;
     }
-
+    /*  
     @GetMapping
     public ResponseEntity<List<ArrendadorDTO>> getAllArrendadores() {
         List<ArrendadorDTO> arrendadores = arrendadorService.getArrendadores();
         return ResponseEntity.ok(arrendadores);
     }
+    */
+    @GetMapping
+    public List<Arrendador> obtenerTodoslosArrendadores() {
+        return arrendadorService.obtenerTodosLosArrendadores();
+    }
+
     /* 
     @GetMapping("/{id}")
     public ResponseEntity<ArrendadorDTO> getArrendadorById(@PathVariable Long id) {
@@ -47,6 +55,13 @@ public class ArrendadorController {
         Optional<Arrendador> arrendador = arrendadorService.obtenerArrendadorPorId(id);
         return arrendador.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Arrendador> actualizarArrendador(@PathVariable Long id, @RequestBody ArrendadorDTO arrendadorDTO) {
+        Arrendador arrendador = arrendadorService.actualizarArrendador(id, arrendadorDTO);
+        return arrendador != null ? ResponseEntity.ok(arrendador) : ResponseEntity.notFound().build();
+    }
+
 
     @PostMapping
     public ResponseEntity<ArrendadorDTO> createArrendador(@RequestBody ArrendadorDTO arrendadorDTO) {
