@@ -5,6 +5,7 @@ import co.taller2.grupo12.grupo12.DTOS.ArrendatarioDTO;
 import co.taller2.grupo12.grupo12.DTOS.FincaDTO;
 import co.taller2.grupo12.grupo12.entity.Arrendador;
 import co.taller2.grupo12.grupo12.entity.Arrendatario;
+import co.taller2.grupo12.grupo12.entity.Finca;
 import co.taller2.grupo12.grupo12.ApplicationRepository.ArrendadorRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -30,18 +31,15 @@ public class ArrendadorService {
         return StreamSupport.stream(arrendadores.spliterator(), false)
             .map(arrendador -> {
                 ArrendadorDTO arrendadorDTO = modelMapper.map(arrendador, ArrendadorDTO.class);
-                List<FincaDTO> fincasDTO = arrendador.getFincas().stream()
-                    .map(finca -> {
-                        // Mapeo de la finca  y su DTO
-                        FincaDTO fincaDTO = modelMapper.map(finca, FincaDTO.class);
-                        return fincaDTO;
-                    })
+                List<String> nombresFincas = arrendador.getFincas().stream()
+                    .map(Finca::getNombre)
                     .collect(Collectors.toList());
-                arrendadorDTO.setFincas(fincasDTO);
+                arrendadorDTO.setNombresFincas(nombresFincas);
                 return arrendadorDTO;
             })
             .collect(Collectors.toList());
     }
+    
 
     public Optional<Arrendador> obtenerArrendadorPorId(Long id) {
         return arrendadorRepository.findById(id);
@@ -80,10 +78,6 @@ public class ArrendadorService {
         arrendador.setCorreo(arrendadorDTO.getCorreo());
         arrendador.setContrasena(arrendadorDTO.getContrasena());
         return arrendadorRepository.save(arrendador);
-    }
-
-    public List<Arrendador> obtenerTodosLosArrendadores() {
-        return (List<Arrendador>) arrendadorRepository.findAll();
     }
 
     public Arrendador guardarArrendador(ArrendadorDTO arrendadorDTO) {
