@@ -33,7 +33,6 @@ public class FincaService {
     @Autowired
     private ArrendadorRepository arrendadorRepository;
 
-    @Autowired
     public FincaService(FincaRepository fincaRepository, ArrendadorRepository arrendadorRepository, ModelMapper modelMapper) {
         this.fincaRepository = fincaRepository;
         this.modelMapper = modelMapper;

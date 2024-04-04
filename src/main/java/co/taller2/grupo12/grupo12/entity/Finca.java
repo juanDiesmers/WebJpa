@@ -52,4 +52,11 @@ public class Finca {
                 ", arrendatario=" + (arrendatario != null ? arrendatario.getId_arrendatario() : "null") +
                 '}';
     }
+    public Finca(Long id_finca, String nombre, double precio, Arrendador arrendador, Arrendatario arrendatario) {
+        this.id_finca = id_finca;
+        this.nombre = nombre;
+        this.precio = precio;
+        this.arrendador = arrendador;
+        this.arrendatario = arrendatario;
+    }
 }

@@ -11,10 +11,9 @@ import lombok.Setter;
 @AllArgsConstructor
 
 public class FincaDTO {
-    private long id_finca;
+    private Long id_finca;
     private String nombre;
     private double precio; 
     private Long id_arrendatario;
     private Long id_arrendador; 
-    
 }

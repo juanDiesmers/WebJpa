@@ -1,6 +1,4 @@
 package co.taller2.grupo12.grupo12.Controller;
-
-
 import org.apache.tomcat.util.http.parser.MediaType;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -32,11 +30,14 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.verify;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+
+import org.modelmapper.ModelMapper;
 
 @SpringBootTest(
     webEnvironment = SpringBootTest.WebEnvironment.MOCK,
@@ -44,15 +45,17 @@ import java.util.Optional;
 ) 
 @AutoConfigureMockMvc
 @RunWith(MockitoJUnitRunner.class)
+
+
 class ArrendadorControllerTest {
 
-@Mock
-ArrendadorService arrendadorService;
+    @Mock
+    ArrendadorService arrendadorService;
 
     
 
-@InjectMocks
-ArrendadorController arrendadorController;
+    @InjectMocks
+    ArrendadorController arrendadorController;
 
    
 
@@ -71,18 +74,46 @@ ArrendadorController arrendadorController;
 
 
     @Test
-    void testObtenerTodosLosArrendadores() {
-        // Configurar objeto mock para el servicio
-        List<Arrendador> arrendadorMock = new ArrayList<>();
-        arrendadorMock.add(new Arrendador());
-        arrendadorMock.add(new Arrendador());
-        // Configurar el comportamiento esperado del método obtenerTodosLosArrendatarios() del servicio
-        when(arrendadorService.obtenerTodosLosArrendadores()).thenReturn(arrendadorMock);
+    void testCrearArrendadorConDTO() {
+        // Datos de prueba
+        ArrendadorDTO arrendadorDTO = new ArrendadorDTO();
+        arrendadorDTO.setNombre("Juan");
+        arrendadorDTO.setApellido("Perez");
+
+        //Crear mock
+        ArrendadorDTO arrendadorDTOMock = new ArrendadorDTO();
+        arrendadorDTOMock.setId_arrendador(1L);
+        arrendadorDTOMock.setNombre(arrendadorDTO.getNombre());
+        arrendadorDTOMock.setApellido(arrendadorDTO.getApellido());
+        
+        // Configurar el comportamiento esperado del método createArrendador() del servicio
+        when(arrendadorService.createArrendador(any(ArrendadorDTO.class))).thenReturn(arrendadorDTOMock);
+        
         // Llamar al método del controlador
-        List<ArrendadorDTO> resultado = arrendadorController.obtenerTodoslosArrendadores();
-        // Verificar el resultadooo
+        ResponseEntity<ArrendadorDTO> response = arrendadorController.createArrendador(arrendadorDTO);
+        
+        // Verificar el resultado
+        assertNotNull(response);
+        assertEquals(HttpStatus.CREATED, response.getStatusCode());
+        assertNotNull(response.getBody());
+        assertEquals(arrendadorDTOMock.getId_arrendador(), response.getBody().getId_arrendador());
+        assertEquals(arrendadorDTOMock.getNombre(), response.getBody().getNombre());
+        assertEquals(arrendadorDTOMock.getApellido(), response.getBody().getApellido());
+    }
+
+    @Test
+    void testCrearArrendador() {
+        // Datos de prueba
+        ArrendadorDTO arrendadorDTO = new ArrendadorDTO();
+        // Configurar objeto mock para el servicio
+        Arrendador arrendadorMock = new Arrendador();
+        // Configurar el comportamiento esperado del método crearArrendatario() del servicio
+        when(arrendadorService.crearArrendadorSIN(any(ArrendadorDTO.class))).thenReturn(arrendadorMock);
+        // Llamar al método del controlador
+        Arrendador resultado = arrendadorController.crearArrendador(arrendadorDTO);
+        // Verificar el resultado
         assertNotNull(resultado);
-        assertEquals(2, resultado.size()); // Verificar que se devuelvan todos los arrendatarios esperados
+        // Si se espera algún procesamiento adicional o validaciones en el servicio, se pueden agregar más pruebas aquí
     }
     
     @Test
@@ -103,4 +134,17 @@ ArrendadorController arrendadorController;
         assertEquals(arrendatarioMock, response.getBody());
     }
 
+    @Test
+    void testEliminarArrendatarioExistente() {
+        // Datos de prueba
+        Long id = 1L;
+        // Llamar al método del controlador
+        ResponseEntity<Void> response = arrendadorController.deleteArrendador(id);
+        // Verificar el resultado
+        assertNotNull(response);
+        assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
+        // Verificar que el método eliminarArrendatarioPorId() del servicio haya sido llamado con el id adecuado
+        verify(arrendadorService).deleteArrendador(id);
+    }
+   
 }
