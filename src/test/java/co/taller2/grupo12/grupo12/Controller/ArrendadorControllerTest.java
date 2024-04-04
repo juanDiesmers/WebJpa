@@ -79,7 +79,7 @@ ArrendadorController arrendadorController;
         // Configurar el comportamiento esperado del método obtenerTodosLosArrendatarios() del servicio
         when(arrendadorService.obtenerTodosLosArrendadores()).thenReturn(arrendadorMock);
         // Llamar al método del controlador
-        List<Arrendador> resultado = arrendadorController.obtenerTodoslosArrendadores();
+        List<ArrendadorDTO> resultado = arrendadorController.obtenerTodoslosArrendadores();
         // Verificar el resultadooo
         assertNotNull(resultado);
         assertEquals(2, resultado.size()); // Verificar que se devuelvan todos los arrendatarios esperados

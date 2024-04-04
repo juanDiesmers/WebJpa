@@ -34,21 +34,9 @@ public class ArrendadorController {
     }
     */
     @GetMapping
-    public List<Arrendador> obtenerTodoslosArrendadores() {
-        return arrendadorService.obtenerTodosLosArrendadores();
+    public List<ArrendadorDTO> obtenerTodoslosArrendadores() {
+        return arrendadorService.getArrendadores();
     }
-
-    /* 
-    @GetMapping("/{id}")
-    public ResponseEntity<ArrendadorDTO> getArrendadorById(@PathVariable Long id) {
-        ArrendadorDTO arrendador = arrendadorService.getArrendadorById(id);
-        if (arrendador != null) {
-            return ResponseEntity.ok(arrendador);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
-    */
 
     @GetMapping("/{id}")
     public ResponseEntity<Arrendador> obtenerArrendadorPorId(@PathVariable Long id) {
