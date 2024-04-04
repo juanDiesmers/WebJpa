@@ -46,4 +46,9 @@ public class Solicitud {
     private Date fecha;
     private String estado;
 
+    public Solicitud(Date fecha, String estado) {
+        this.fecha = fecha;
+        this.estado = estado;
+    }
+
 }
