@@ -1,5 +1,6 @@
 package co.taller2.grupo12.grupo12.services;
 
+import java.sql.Date;
 import java.util.List;
 
 import co.taller2.grupo12.grupo12.DTOS.PagoDTO;
@@ -17,10 +18,12 @@ import java.util.stream.StreamSupport;
 public class PagoService {
 
     private final PagoRepository pagoRepository;
+    private final ModelMapper modelMapper;
 
     @Autowired
-    public PagoService(PagoRepository pagoRepository) {
+    public PagoService(PagoRepository pagoRepository, ModelMapper modelMapper) {
         this.pagoRepository = pagoRepository;
+        this.modelMapper = modelMapper;
     }
 
     public List<PagoDTO> getAllPagos() {
@@ -44,9 +47,8 @@ public class PagoService {
         Optional<Pago> pagoOptional = pagoRepository.findById(id);
         if (pagoOptional.isPresent()) {
             Pago existingPago = pagoOptional.get();
-            existingPago.setFecha(pagoDTO.getFecha());
+            existingPago.setFecha((Date) pagoDTO.getFecha());
             existingPago.setValor(pagoDTO.getValor());
-            // Set other attributes if needed
             return convertToDTO(pagoRepository.save(existingPago));
         } else {
             return null;
@@ -58,20 +60,15 @@ public class PagoService {
     }
 
     private PagoDTO convertToDTO(Pago pago) {
-        PagoDTO pagoDTO = new PagoDTO();
-        pagoDTO.setId_pago(pago.getId_pago());
-        pagoDTO.setFecha(pago.getFecha());
-        pagoDTO.setValor(pago.getValor());
-        // Set other attributes if needed
+        PagoDTO pagoDTO = modelMapper.map(pago, PagoDTO.class);
+        // Set IDs directly to DTO from entity
+        pagoDTO.setId_arrendatario(pago.getArrendatario().getId_arrendatario());
+        pagoDTO.setId_solicitud(pago.getSolicitud().getId_solicitud());
         return pagoDTO;
     }
 
     private Pago convertToEntity(PagoDTO pagoDTO) {
-        Pago pago = new Pago();
-        pago.setId_pago(pagoDTO.getId_pago());
-        pago.setFecha(pagoDTO.getFecha());
-        pago.setValor(pagoDTO.getValor());
-        // Set other attributes if needed
+        Pago pago = modelMapper.map(pagoDTO, Pago.class);
         return pago;
     }
 }

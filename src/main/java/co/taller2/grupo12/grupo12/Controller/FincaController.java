@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/fincas")
 public class FincaController {
 
@@ -21,7 +22,7 @@ public class FincaController {
 
     @GetMapping
     public ResponseEntity<List<FincaDTO>> getAllFincas() {
-        List<FincaDTO> fincas = fincaService.getAllFincas();    
+        List<FincaDTO> fincas = fincaService.getAllFincas();
         return ResponseEntity.ok(fincas);
     }
 

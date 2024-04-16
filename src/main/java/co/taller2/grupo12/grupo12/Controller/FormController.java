@@ -15,12 +15,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/submit")
 public class FormController {
 
     private final ArrendadorService arrendadorService;
 
-    
     public FormController(ArrendadorService arrendadorService) {
         this.arrendadorService = arrendadorService;
     }

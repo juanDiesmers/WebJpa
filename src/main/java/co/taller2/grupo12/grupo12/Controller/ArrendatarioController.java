@@ -12,10 +12,10 @@ import co.taller2.grupo12.grupo12.DTOS.ArrendatarioDTO;
 import co.taller2.grupo12.grupo12.entity.Arrendatario;
 import co.taller2.grupo12.grupo12.services.ArrendatarioService;
 
-
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/arrendatarios")
 public class ArrendatarioController {
 
@@ -39,7 +39,8 @@ public class ArrendatarioController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Arrendatario> actualizarArrendatario(@PathVariable Long id, @RequestBody ArrendatarioDTO arrendatarioDTO) {
+    public ResponseEntity<Arrendatario> actualizarArrendatario(@PathVariable Long id,
+            @RequestBody ArrendatarioDTO arrendatarioDTO) {
         Arrendatario arrendatario = arrendatarioService.actualizarArrendatario(id, arrendatarioDTO);
         return arrendatario != null ? ResponseEntity.ok(arrendatario) : ResponseEntity.notFound().build();
     }

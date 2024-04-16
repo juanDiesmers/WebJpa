@@ -1,6 +1,5 @@
 package co.taller2.grupo12.grupo12.Service;
 
-
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.mockito.*;
@@ -9,7 +8,6 @@ import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 
 import org.springframework.boot.test.context.SpringBootTest;
-
 
 import co.taller2.grupo12.grupo12.Grupo12Application;
 
@@ -35,14 +33,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-
-@SpringBootTest(
-    webEnvironment = SpringBootTest.WebEnvironment.MOCK,
-    classes = Grupo12Application.class
-) 
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK, classes = Grupo12Application.class)
 @AutoConfigureMockMvc
 @RunWith(MockitoJUnitRunner.class)
-
 
 public class PagoServiceTest {
 
@@ -52,12 +45,12 @@ public class PagoServiceTest {
     @InjectMocks
     private PagoService pagoService;
 
-
     @Test
     void testGetAllPagos() {
         // Datos de prueba
         List<Pago> pagos = new ArrayList<>();
-        pagos.add(new Pago(1L, Date.valueOf("2024-04-03"), 100.0, null, null)); // Suponiendo que tienes un constructor en Pago
+        pagos.add(new Pago(1L, Date.valueOf("2024-04-03"), 100.0, null, null)); // Suponiendo que tienes un constructor
+                                                                                // en Pago
         pagos.add(new Pago(2L, Date.valueOf("2024-04-04"), 150.0, null, null));
         when(pagoRepository.findAll()).thenReturn(pagos);
 
@@ -68,6 +61,7 @@ public class PagoServiceTest {
         assertNotNull(result);
         assertEquals(2, result.size());
     }
+
     @Test
     void testGetPagoById_ExistingId() {
         // Datos de prueba
@@ -91,7 +85,7 @@ public class PagoServiceTest {
         pagoDTO.setFecha(Date.valueOf("2024-04-03"));
         pagoDTO.setValor(100.0);
 
-        Pago pago = new Pago(1L, pagoDTO.getFecha(), pagoDTO.getValor(), null, null);
+        Pago pago = new Pago(); // Fix: Update constructor call
         when(pagoRepository.save(any(Pago.class))).thenReturn(pago);
 
         // Llamar al método del servicio
@@ -102,21 +96,23 @@ public class PagoServiceTest {
         assertEquals(pagoDTO.getFecha(), result.getFecha());
         assertEquals(pagoDTO.getValor(), result.getValor());
     }
+
     @Test
     void testDeletePago() {
         // Llamar al método del servicio
         pagoService.deletePago(1L);
 
-        // Verificar que se llame al método deleteById del repositorio con el ID correcto
+        // Verificar que se llame al método deleteById del repositorio con el ID
+        // correcto
         verify(pagoRepository).deleteById(1L);
     }
 
     @Test
     void testUpdatePago_NullInput() {
-    // Llamar al método del servicio con un ID y un objeto PagoDTO nulos
-    PagoDTO result = pagoService.updatePago(null, null);
+        // Llamar al método del servicio con un ID y un objeto PagoDTO nulos
+        PagoDTO result = pagoService.updatePago(null, null);
 
-    // Verificar que el resultado sea nulo
-    assertNull(result);
-}
+        // Verificar que el resultado sea nulo
+        assertNull(result);
+    }
 }

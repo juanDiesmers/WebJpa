@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,6 +19,7 @@ import co.taller2.grupo12.grupo12.DTOS.ComentarioDTO;
 import co.taller2.grupo12.grupo12.services.ComentarioService;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/comentarios")
 public class ComentarioController {
 
@@ -50,7 +52,8 @@ public class ComentarioController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ComentarioDTO> updateComentario(@PathVariable Long id, @RequestBody ComentarioDTO comentarioDTO) {
+    public ResponseEntity<ComentarioDTO> updateComentario(@PathVariable Long id,
+            @RequestBody ComentarioDTO comentarioDTO) {
         ComentarioDTO updatedComentario = comentarioService.updateComentario(id, comentarioDTO);
         if (updatedComentario != null) {
             return ResponseEntity.ok(updatedComentario);

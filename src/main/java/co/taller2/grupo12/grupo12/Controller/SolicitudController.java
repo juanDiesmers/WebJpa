@@ -12,6 +12,7 @@ import co.taller2.grupo12.grupo12.services.SolicitudService;
 import java.util.List;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/solicitudes")
 public class SolicitudController {
 

@@ -14,25 +14,26 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
-
-
 @RestController
+@CrossOrigin
 @RequestMapping("/arrendadores")
+
 public class ArrendadorController {
-    
+
     @Autowired
     private final ArrendadorService arrendadorService;
 
     public ArrendadorController(ArrendadorService arrendadorService) {
         this.arrendadorService = arrendadorService;
     }
-    /*  
-    @GetMapping
-    public ResponseEntity<List<ArrendadorDTO>> getAllArrendadores() {
-        List<ArrendadorDTO> arrendadores = arrendadorService.getArrendadores();
-        return ResponseEntity.ok(arrendadores);
-    }
-    */
+
+    /*
+     * @GetMapping
+     * public ResponseEntity<List<ArrendadorDTO>> getAllArrendadores() {
+     * List<ArrendadorDTO> arrendadores = arrendadorService.getArrendadores();
+     * return ResponseEntity.ok(arrendadores);
+     * }
+     */
     @GetMapping
     public List<ArrendadorDTO> obtenerTodoslosArrendadores() {
         return arrendadorService.getArrendadores();
@@ -45,24 +46,23 @@ public class ArrendadorController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Arrendador> actualizarArrendador(@PathVariable Long id, @RequestBody ArrendadorDTO arrendadorDTO) {
+    public ResponseEntity<Arrendador> actualizarArrendador(@PathVariable Long id,
+            @RequestBody ArrendadorDTO arrendadorDTO) {
         Arrendador arrendador = arrendadorService.actualizarArrendador(id, arrendadorDTO);
         return arrendador != null ? ResponseEntity.ok(arrendador) : ResponseEntity.notFound().build();
     }
-
 
     @PostMapping("/arrendadores")
     public ResponseEntity<ArrendadorDTO> createArrendador(@RequestBody ArrendadorDTO arrendadorDTO) {
         ArrendadorDTO createdArrendador = arrendadorService.createArrendador(arrendadorDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdArrendador);
     }
-    
+
     @PostMapping("/crearArrendador")
     public Arrendador crearArrendador(@RequestBody ArrendadorDTO arrendadorDTO) {
         return arrendadorService.crearArrendadorSIN(arrendadorDTO);
     }
 
-    
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteArrendador(@PathVariable Long id) {
         arrendadorService.deleteArrendador(id);
@@ -70,4 +70,3 @@ public class ArrendadorController {
     }
 
 }
-
