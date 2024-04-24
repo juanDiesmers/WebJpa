@@ -15,14 +15,13 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@CrossOrigin
+@CrossOrigin(origins = "http://127.0.0.1")
 @RequestMapping("/arrendadores")
 
 public class ArrendadorController {
 
-    @Autowired
     private final ArrendadorService arrendadorService;
-
+    @Autowired
     public ArrendadorController(ArrendadorService arrendadorService) {
         this.arrendadorService = arrendadorService;
     }
