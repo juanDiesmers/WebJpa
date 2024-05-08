@@ -12,7 +12,7 @@ import co.taller2.grupo12.grupo12.services.SolicitudService;
 import java.util.List;
 
 @RestController
-@CrossOrigin
+@CrossOrigin(origins = {"http://127.0.0.1", "http://localhost:4200"})
 @RequestMapping("/solicitudes")
 public class SolicitudController {
 

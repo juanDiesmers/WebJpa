@@ -15,7 +15,8 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@CrossOrigin(origins = "http://127.0.0.1")
+@CrossOrigin(origins = {"http://127.0.0.1", "http://localhost:4200"})
+//"http://localhost:4200"
 @RequestMapping("/arrendadores")
 
 public class ArrendadorController {

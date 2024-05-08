@@ -30,6 +30,7 @@ public class Finca {
 
     private String nombre;
     private double precio;
+    private String descripcion;
 
     @ManyToOne(fetch = FetchType.LAZY) // Un arrendador puede tener muchas fincas, pero una finca pertenece a un solo arrendador
     @JoinColumn(name = "id_arrendador", referencedColumnName = "id_arrendador")

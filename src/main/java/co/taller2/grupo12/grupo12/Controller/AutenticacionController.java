@@ -13,6 +13,7 @@ import co.taller2.grupo12.grupo12.services.JWTTokenService;
 
 @RestController
 @RequestMapping(value = "/jwt/security/autenticar")
+@CrossOrigin(origins = {"http://127.0.0.1", "http://localhost:4200"})
 public class AutenticacionController {
 
     @Autowired
