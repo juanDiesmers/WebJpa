@@ -19,7 +19,7 @@ import co.taller2.grupo12.grupo12.DTOS.ComentarioDTO;
 import co.taller2.grupo12.grupo12.services.ComentarioService;
 
 @RestController
-@CrossOrigin(origins = {"http://127.0.0.1", "http://localhost:4200"})
+@CrossOrigin(origins = "*")
 @RequestMapping("/comentarios")
 
 public class ComentarioController {

@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
-@CrossOrigin(origins = {"http://127.0.0.1", "http://localhost:4200"})
+@CrossOrigin(origins = "*")
 @RequestMapping("/submit")
 public class FormController {
 

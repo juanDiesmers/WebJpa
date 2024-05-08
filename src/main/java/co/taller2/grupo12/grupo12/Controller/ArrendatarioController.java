@@ -15,7 +15,7 @@ import co.taller2.grupo12.grupo12.services.ArrendatarioService;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@CrossOrigin(origins = {"http://127.0.0.1", "http://localhost:4200"})
+@CrossOrigin(origins = "*")
 @RequestMapping("/arrendatarios")
 public class ArrendatarioController {
 

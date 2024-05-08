@@ -19,7 +19,7 @@ import co.taller2.grupo12.grupo12.DTOS.PagoDTO;
 import co.taller2.grupo12.grupo12.services.PagoService;
 
 @RestController
-@CrossOrigin(origins = {"http://127.0.0.1", "http://localhost:4200"})
+@CrossOrigin(origins = "*")
 @RequestMapping("/pagos")
 public class PagoController {
 

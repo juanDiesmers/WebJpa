@@ -27,7 +27,7 @@ public class UsuarioController {
     // return null;
     // }
 
-    @CrossOrigin(origins = {"http://127.0.0.1", "http://localhost:4200"})
+    @CrossOrigin(origins = "*")
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public UsuarioDTO autenticar(Authentication authentication) throws Exception {
         System.out.println(authentication);
