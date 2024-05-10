@@ -1,4 +1,4 @@
-package co.taller2.grupo12.grupo12.Filter;
+package co.taller2.grupo12.grupo12.filter;
 
 import java.io.IOException;
 

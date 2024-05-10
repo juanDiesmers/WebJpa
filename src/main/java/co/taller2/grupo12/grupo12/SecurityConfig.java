@@ -15,11 +15,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.OrRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.mvc.condition.RequestMethodsRequestCondition;
-
-import co.taller2.grupo12.grupo12.Filter.JWTAuthorizationFilter;
-
+import co.taller2.grupo12.grupo12.filter.JWTAuthorizationFilter;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig implements ISecurityConfig {
