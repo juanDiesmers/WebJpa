@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import co.taller2.grupo12.grupo12.entity.Comentario;
-import co.taller2.grupo12.grupo12.entity.Pago;
 import co.taller2.grupo12.grupo12.entity.Solicitud;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,6 +21,5 @@ public class ArrendatarioDTO {
     private String correo;
     private String contrasena;
     private List<Solicitud> solicitudes = new ArrayList<>();
-    private List<Pago> pagos = new ArrayList<>();
     private List<Comentario> comentarios = new ArrayList<>();
 }

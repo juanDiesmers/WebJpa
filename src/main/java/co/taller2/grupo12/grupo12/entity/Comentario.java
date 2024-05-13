@@ -3,7 +3,7 @@ package co.taller2.grupo12.grupo12.entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-
+import jakarta.persistence.OneToOne;
 
 import java.sql.Date;
 
@@ -26,7 +26,7 @@ import lombok.Setter;
 public class Comentario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id_solicitud;
+    private Long id_comentario;
 
     private Date fecha;
     private double calificacion;
@@ -41,4 +41,7 @@ public class Comentario {
     @JoinColumn(name = "id_arrendador", referencedColumnName = "id_arrendador", unique=false, nullable=false)
     private Arrendador arrendador;
 
+    @OneToOne
+    @JoinColumn(name = "id_solicitud", referencedColumnName = "id_solicitud")
+    private Solicitud solicitud;
 }

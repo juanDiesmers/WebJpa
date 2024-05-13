@@ -1,12 +1,10 @@
 package co.taller2.grupo12.grupo12.Controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import co.taller2.grupo12.grupo12.DTOS.SolicitudDTO;
-import co.taller2.grupo12.grupo12.entity.Solicitud;
 import co.taller2.grupo12.grupo12.services.SolicitudService;
 
 import java.util.List;
@@ -18,7 +16,6 @@ public class SolicitudController {
 
     private final SolicitudService solicitudService;
 
-    @Autowired
     public SolicitudController(SolicitudService solicitudService) {
         this.solicitudService = solicitudService;
     }

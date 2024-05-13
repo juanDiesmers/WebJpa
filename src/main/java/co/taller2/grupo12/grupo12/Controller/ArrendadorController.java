@@ -1,12 +1,9 @@
 package co.taller2.grupo12.grupo12.Controller;
 
 import co.taller2.grupo12.grupo12.DTOS.ArrendadorDTO;
-import co.taller2.grupo12.grupo12.DTOS.ArrendatarioDTO;
 import co.taller2.grupo12.grupo12.entity.Arrendador;
-import co.taller2.grupo12.grupo12.entity.Arrendatario;
 import co.taller2.grupo12.grupo12.services.ArrendadorService;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +19,6 @@ import java.util.Optional;
 public class ArrendadorController {
 
     private final ArrendadorService arrendadorService;
-    @Autowired
     public ArrendadorController(ArrendadorService arrendadorService) {
         this.arrendadorService = arrendadorService;
     }

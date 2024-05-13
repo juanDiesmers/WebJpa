@@ -2,16 +2,9 @@ package co.taller2.grupo12.grupo12.entity;
 
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 
 import java.sql.Date;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.Where;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -33,13 +26,18 @@ public class Pago {
     private long id_pago;
 
     private Date fecha;
-    private double valor;
+    private String banco;
+    private String numeroCuenta;
 
-    @ManyToOne
-    @JoinColumn(name = "id_arrendatario", referencedColumnName = "id_arrendatario", unique=false, nullable=false)
-    private Arrendatario arrendatario;
+    public String getNumeroCuenta() {
+        return numeroCuenta;
+    }
 
-    @ManyToOne
-    @JoinColumn(name = "id_solicitud", referencedColumnName = "id_solicitud", unique=false, nullable=false)
+    public void setNumeroCuenta(String numeroCuenta) {
+        this.numeroCuenta = numeroCuenta;
+    }
+
+    @OneToOne
+    @JoinColumn(name = "id_solicitud", referencedColumnName = "id_solicitud")
     private Solicitud solicitud;
 }

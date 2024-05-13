@@ -1,7 +1,6 @@
 package co.taller2.grupo12.grupo12.services;
 
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import co.taller2.grupo12.grupo12.DTOS.SolicitudDTO;
@@ -25,7 +24,6 @@ public class SolicitudService {
     private final FincaRepository fincaRepository;
     private final ModelMapper modelMapper;
 
-    @Autowired
     public SolicitudService(SolicitudRepository solicitudRepository, ArrendatarioRepository arrendatarioRepository, FincaRepository fincaRepository, ModelMapper modelMapper) {
         this.solicitudRepository = solicitudRepository;
         this.arrendatarioRepository = arrendatarioRepository;

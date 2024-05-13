@@ -2,7 +2,6 @@ package co.taller2.grupo12.grupo12.Controller;
 
 import co.taller2.grupo12.grupo12.DTOS.FincaDTO;
 import co.taller2.grupo12.grupo12.services.FincaService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,7 +14,6 @@ public class FincaController {
 
     private final FincaService fincaService;
 
-    @Autowired
     public FincaController(FincaService fincaService) {
         this.fincaService = fincaService;
     }

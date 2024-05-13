@@ -4,13 +4,14 @@ import java.util.List;
 
 import co.taller2.grupo12.grupo12.DTOS.ComentarioDTO;
 import co.taller2.grupo12.grupo12.entity.Comentario;
+import co.taller2.grupo12.grupo12.entity.Solicitud;
 import co.taller2.grupo12.grupo12.entity.Arrendador;
 import co.taller2.grupo12.grupo12.entity.Arrendatario;
 import co.taller2.grupo12.grupo12.ApplicationRepository.ComentarioRepository;
+import co.taller2.grupo12.grupo12.ApplicationRepository.SolicitudRepository;
 import co.taller2.grupo12.grupo12.ApplicationRepository.ArrendadorRepository;
 import co.taller2.grupo12.grupo12.ApplicationRepository.ArrendatarioRepository;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -23,13 +24,14 @@ public class ComentarioService {
     private final ComentarioRepository comentarioRepository;
     private final ArrendatarioRepository arrendatarioRepository;
     private final ArrendadorRepository arrendadorRepository;
+    private final SolicitudRepository solicitudRepository;
     private final ModelMapper modelMapper;
 
-    @Autowired
-    public ComentarioService(ComentarioRepository comentarioRepository, ArrendatarioRepository arrendatarioRepository, ArrendadorRepository arrendadorRepository, ModelMapper modelMapper) {
+    public ComentarioService(ComentarioRepository comentarioRepository, ArrendatarioRepository arrendatarioRepository, ArrendadorRepository arrendadorRepository, SolicitudRepository solicitudRepository, ModelMapper modelMapper) {
         this.comentarioRepository = comentarioRepository;
         this.arrendatarioRepository = arrendatarioRepository;
         this.arrendadorRepository = arrendadorRepository;
+        this.solicitudRepository = solicitudRepository;
         this.modelMapper = modelMapper;
     }
 
@@ -47,7 +49,7 @@ public class ComentarioService {
 
     public ComentarioDTO createComentario(ComentarioDTO comentarioDTO) {
         Comentario comentario = convertToEntity(comentarioDTO);
-        if (comentario.getArrendador() != null && comentario.getArrendatario() != null) {
+        if (comentario.getArrendador() != null && comentario.getArrendatario() != null && comentario.getSolicitud() != null) {
             return convertToDTO(comentarioRepository.save(comentario));
         } else {
             throw new IllegalArgumentException("Arrendador o arrendatario no pueden ser nulos.");
@@ -84,10 +86,13 @@ public class ComentarioService {
                 .orElseThrow(() -> new IllegalArgumentException("No se encontró ningún arrendador con el ID proporcionado."));
         Arrendatario arrendatario = arrendatarioRepository.findById(comentarioDTO.getIdArrendatario())
                 .orElseThrow(() -> new IllegalArgumentException("No se encontró ningún arrendatario con el ID proporcionado."));
+        Solicitud solicitud = solicitudRepository.findById(comentarioDTO.getId_solicitud())
+                .orElseThrow(() -> new IllegalArgumentException("No se encontró ninguna solicitud con el ID proporcionado."));
         
         // Asignar los arrendadores y arrendatarios al comentario
         comentario.setArrendador(arrendador);
         comentario.setArrendatario(arrendatario);
+        comentario.setSolicitud(solicitud);
         
         return comentario;
     }

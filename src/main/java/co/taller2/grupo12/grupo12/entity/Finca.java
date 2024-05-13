@@ -27,18 +27,15 @@ public class Finca {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id_finca;
-
     private String nombre;
     private double precio;
     private String descripcion;
+    private String municipio;
+    private boolean activa;
 
     @ManyToOne(fetch = FetchType.LAZY) // Un arrendador puede tener muchas fincas, pero una finca pertenece a un solo arrendador
     @JoinColumn(name = "id_arrendador", referencedColumnName = "id_arrendador")
     private Arrendador arrendador;
-
-    @ManyToOne(fetch = FetchType.LAZY) // Un arrendatario puede arrendar varias fincas, pero una finca solo puede ser arrendada por un arrendatario
-    @JoinColumn(name = "id_arrendatario", referencedColumnName = "id_arrendatario")
-    private Arrendatario arrendatario;
 
     @OneToMany(mappedBy = "finca")
     private List<Solicitud> solicitudes = new ArrayList<>();
@@ -50,14 +47,15 @@ public class Finca {
                 ", nombre='" + nombre + '\'' +
                 ", precio=" + precio +
                 ", arrendador=" + (arrendador != null ? arrendador.getId_arrendador() : "null") +
-                ", arrendatario=" + (arrendatario != null ? arrendatario.getId_arrendatario() : "null") +
                 '}';
     }
-    public Finca(Long id_finca, String nombre, double precio, Arrendador arrendador, Arrendatario arrendatario) {
+    public Finca(Long id_finca, String nombre, double precio, String descripcion, String municipio, boolean activa, Arrendador arrendador) {
         this.id_finca = id_finca;
         this.nombre = nombre;
         this.precio = precio;
+        this.descripcion = descripcion;
+        this.municipio = municipio;
+        this.activa = activa;
         this.arrendador = arrendador;
-        this.arrendatario = arrendatario;
     }
 }

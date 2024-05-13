@@ -7,7 +7,6 @@ import co.taller2.grupo12.grupo12.DTOS.PagoDTO;
 import co.taller2.grupo12.grupo12.entity.Pago;
 import co.taller2.grupo12.grupo12.ApplicationRepository.PagoRepository;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -20,7 +19,6 @@ public class PagoService {
     private final PagoRepository pagoRepository;
     private final ModelMapper modelMapper;
 
-    @Autowired
     public PagoService(PagoRepository pagoRepository, ModelMapper modelMapper) {
         this.pagoRepository = pagoRepository;
         this.modelMapper = modelMapper;
@@ -48,7 +46,8 @@ public class PagoService {
         if (pagoOptional.isPresent()) {
             Pago existingPago = pagoOptional.get();
             existingPago.setFecha((Date) pagoDTO.getFecha());
-            existingPago.setValor(pagoDTO.getValor());
+            existingPago.setBanco(pagoDTO.getBanco());
+            existingPago.setNumeroCuenta(pagoDTO.getNumeroCuenta());
             return convertToDTO(pagoRepository.save(existingPago));
         } else {
             return null;
@@ -62,7 +61,6 @@ public class PagoService {
     private PagoDTO convertToDTO(Pago pago) {
         PagoDTO pagoDTO = modelMapper.map(pago, PagoDTO.class);
         // Set IDs directly to DTO from entity
-        pagoDTO.setId_arrendatario(pago.getArrendatario().getId_arrendatario());
         pagoDTO.setId_solicitud(pago.getSolicitud().getId_solicitud());
         return pagoDTO;
     }

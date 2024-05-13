@@ -21,5 +21,4 @@ public class ArrendadorDTO {
     private String contrasena;
     private List<String> nombresFincas; 
     private List<ComentarioDTO> comentarios = new ArrayList<>();
-    
 }

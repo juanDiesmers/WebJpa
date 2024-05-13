@@ -12,11 +12,11 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ComentarioDTO {
-    private Long id_solicitud;
+    private Long id_comentario;
     private double calificacion;
     private String comentario;
     private Date fecha;
     private Long idArrendador;
     private Long idArrendatario;
-    
+    private Long id_solicitud;
 }

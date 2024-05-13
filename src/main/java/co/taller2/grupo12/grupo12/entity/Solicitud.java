@@ -3,16 +3,7 @@ package co.taller2.grupo12.grupo12.entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
-
 import java.sql.Date;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.Where;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -40,15 +31,11 @@ public class Solicitud {
     @JoinColumn(name = "id_finca", referencedColumnName = "id_finca", unique=false, nullable=false)
     private Finca finca;
 
-    @OneToMany(mappedBy = "solicitud")
-    private List<Pago> pagos = new ArrayList<Pago>();
-
     private Date fecha;
-    private String estado;
+    private Estado estado;
 
-    public Solicitud(Date fecha, String estado) {
+    public Solicitud(Date fecha, Estado estado) {
         this.fecha = fecha;
         this.estado = estado;
     }
-
 }
