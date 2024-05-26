@@ -22,7 +22,7 @@ public class ArrendatarioController {
     @Autowired
     private ArrendatarioService arrendatarioService;
 
-    @PostMapping
+    @PostMapping("/crearArrendatario")
     public Arrendatario crearArrendatario(@RequestBody ArrendatarioDTO arrendatarioDTO) {
         return arrendatarioService.crearArrendatario(arrendatarioDTO);
     }

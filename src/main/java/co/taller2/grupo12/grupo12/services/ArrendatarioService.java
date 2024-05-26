@@ -32,13 +32,17 @@ public class ArrendatarioService {
     private String errorContrasena = "La contraseña debe tener al menos 8 caracteres.";
 
     public Arrendatario crearArrendatario(ArrendatarioDTO arrendatarioDTO) {
+        if (arrendatarioDTO.getContrasena() == null) {
+            throw new IllegalArgumentException("La contraseña no puede ser nula.");
+        }
+
         Arrendatario arrendatario = new Arrendatario();
         arrendatario.setNombre(arrendatarioDTO.getNombre());
         arrendatario.setApellido(arrendatarioDTO.getApellido());
         arrendatario.setCorreo(arrendatarioDTO.getCorreo());
         String encodedPassword = passwordEncoder.encode(arrendatarioDTO.getContrasena());
-        arrendatarioDTO.setContrasena(encodedPassword);
-        // arrendatario.setContrasena(arrendatarioDTO.getContrasena());
+        arrendatario.setContrasena(encodedPassword);
+
         return arrendatarioRepository.save(arrendatario);
     }
 
