@@ -32,14 +32,15 @@ public class ArrendatarioService {
     private String errorContrasena = "La contraseña debe tener al menos 8 caracteres.";
 
     public Arrendatario crearArrendatario(ArrendatarioDTO arrendatarioDTO) {
-        if (arrendatarioDTO.getContrasena() == null) {
-            throw new IllegalArgumentException("La contraseña no puede ser nula.");
+        if (arrendatarioDTO.getContrasena() == null || arrendatarioDTO.getContrasena().isEmpty()) {
+            throw new IllegalArgumentException("La contraseña no puede ser nula o vacía.");
         }
 
         Arrendatario arrendatario = new Arrendatario();
         arrendatario.setNombre(arrendatarioDTO.getNombre());
         arrendatario.setApellido(arrendatarioDTO.getApellido());
         arrendatario.setCorreo(arrendatarioDTO.getCorreo());
+        arrendatario.setTelefono(arrendatarioDTO.getTelefono());
         String encodedPassword = passwordEncoder.encode(arrendatarioDTO.getContrasena());
         arrendatario.setContrasena(encodedPassword);
 
@@ -61,9 +62,13 @@ public class ArrendatarioService {
             arrendatario.setNombre(arrendatarioDTO.getNombre());
             arrendatario.setApellido(arrendatarioDTO.getApellido());
             arrendatario.setCorreo(arrendatarioDTO.getCorreo());
-            String encodedPassword = passwordEncoder.encode(arrendatarioDTO.getContrasena());
-            arrendatarioDTO.setContrasena(encodedPassword);
-            // arrendatario.setContrasena(arrendatarioDTO.getContrasena());
+            arrendatario.setTelefono(arrendatarioDTO.getTelefono());
+
+            if (arrendatarioDTO.getContrasena() != null && !arrendatarioDTO.getContrasena().isEmpty()) {
+                String encodedPassword = passwordEncoder.encode(arrendatarioDTO.getContrasena());
+                arrendatario.setContrasena(encodedPassword);
+            }
+
             return arrendatarioRepository.save(arrendatario);
         }
         return null;

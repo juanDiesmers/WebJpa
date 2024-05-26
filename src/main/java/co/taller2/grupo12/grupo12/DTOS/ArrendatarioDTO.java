@@ -19,6 +19,7 @@ public class ArrendatarioDTO {
     private String nombre;
     private String apellido;
     private String correo;
+    private String telefono;
     private String contrasena;
     private List<Solicitud> solicitudes = new ArrayList<>();
     private List<Comentario> comentarios = new ArrayList<>();

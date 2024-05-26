@@ -13,12 +13,13 @@ import java.util.Optional;
 
 @RestController
 @CrossOrigin(origins = "*")
-//"http://localhost:4200"
+// "http://localhost:4200"
 @RequestMapping("/arrendadores")
 
 public class ArrendadorController {
 
     private final ArrendadorService arrendadorService;
+
     public ArrendadorController(ArrendadorService arrendadorService) {
         this.arrendadorService = arrendadorService;
     }
@@ -55,8 +56,12 @@ public class ArrendadorController {
     }
 
     @PostMapping("/crearArrendador")
-    public Arrendador crearArrendador(@RequestBody ArrendadorDTO arrendadorDTO) {
-        return arrendadorService.crearArrendadorSIN(arrendadorDTO);
+    public ResponseEntity<Arrendador> crearArrendador(@RequestBody ArrendadorDTO arrendadorDTO) {
+        if (arrendadorDTO.getContrasena() == null || arrendadorDTO.getContrasena().isEmpty()) {
+            throw new IllegalArgumentException("Password cannot be null or empty");
+        }
+        Arrendador createdArrendador = arrendadorService.crearArrendadorSIN(arrendadorDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdArrendador);
     }
 
     @DeleteMapping("/{id}")

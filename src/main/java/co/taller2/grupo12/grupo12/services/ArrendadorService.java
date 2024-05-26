@@ -86,9 +86,16 @@ public class ArrendadorService {
         arrendador.setNombre(arrendadorDTO.getNombre());
         arrendador.setApellido(arrendadorDTO.getApellido());
         arrendador.setCorreo(arrendadorDTO.getCorreo());
-        String encodedPassword = passwordEncoder.encode(arrendador.getContrasena());
-        arrendador.setContrasena(encodedPassword);
-        // arrendador.setContrasena(arrendadorDTO.getContrasena());
+
+        // Codificar la contraseña desde el DTO y luego establecerla en el objeto
+        // Arrendador
+        if (arrendadorDTO.getContrasena() != null && !arrendadorDTO.getContrasena().isEmpty()) {
+            String encodedPassword = passwordEncoder.encode(arrendadorDTO.getContrasena());
+            arrendador.setContrasena(encodedPassword);
+        } else {
+            throw new IllegalArgumentException("Password cannot be null or empty");
+        }
+
         return arrendadorRepository.save(arrendador);
     }
 

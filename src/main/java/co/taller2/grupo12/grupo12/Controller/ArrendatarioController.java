@@ -4,9 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import co.taller2.grupo12.grupo12.DTOS.ArrendatarioDTO;
 import co.taller2.grupo12.grupo12.entity.Arrendatario;
@@ -23,8 +22,12 @@ public class ArrendatarioController {
     private ArrendatarioService arrendatarioService;
 
     @PostMapping("/crearArrendatario")
-    public Arrendatario crearArrendatario(@RequestBody ArrendatarioDTO arrendatarioDTO) {
-        return arrendatarioService.crearArrendatario(arrendatarioDTO);
+    public ResponseEntity<Arrendatario> crearArrendatario(@RequestBody ArrendatarioDTO arrendatarioDTO) {
+        if (arrendatarioDTO.getContrasena() == null || arrendatarioDTO.getContrasena().isEmpty()) {
+            throw new IllegalArgumentException("Password cannot be null or empty");
+        }
+        Arrendatario createdArrendatario = arrendatarioService.crearArrendatario(arrendatarioDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdArrendatario);
     }
 
     @GetMapping
