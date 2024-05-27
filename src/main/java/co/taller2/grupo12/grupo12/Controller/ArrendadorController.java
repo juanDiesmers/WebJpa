@@ -57,6 +57,7 @@ public class ArrendadorController {
 
     @PostMapping("/crearArrendador")
     public ResponseEntity<Arrendador> crearArrendador(@RequestBody ArrendadorDTO arrendadorDTO) {
+        System.out.println("Datos recibidos: " + arrendadorDTO); // Verificar los datos aquí
         if (arrendadorDTO.getContrasena() == null || arrendadorDTO.getContrasena().isEmpty()) {
             throw new IllegalArgumentException("Password cannot be null or empty");
         }
