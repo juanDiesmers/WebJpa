@@ -2,13 +2,17 @@ package co.taller2.grupo12.grupo12.Controller;
 
 import co.taller2.grupo12.grupo12.DTOS.FincaDTO;
 import co.taller2.grupo12.grupo12.services.FincaService;
+
+import org.json.JSONObject;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
 
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "*", allowedHeaders = "Authorization")
 @RequestMapping("/fincas")
 public class FincaController {
 
@@ -24,9 +28,28 @@ public class FincaController {
         return ResponseEntity.ok(fincas);
     }
 
+    @PreAuthorize("hasRole('ROLE_ARRENDADOR')")
     @PostMapping
-    public FincaDTO guardarFinca(@RequestBody FincaDTO fincaDTO) {
-        return fincaService.createFinca(fincaDTO);
+    public ResponseEntity<FincaDTO> guardarFinca(@RequestBody FincaDTO fincaDTO, org.springframework.security.core.Authentication authentication) {
+        String correoArrendador = null;
+        if (authentication != null) {
+            Object principal = authentication.getPrincipal();
+            if (principal instanceof String) {
+                // Parsear el JSON para obtener el correo
+                String jsonString = (String) principal;
+                JSONObject json = new JSONObject(jsonString);
+                correoArrendador = json.getString("correo");
+            } else {
+                System.out.println("Authentication principal is not an instance of String");
+            }
+        } else {
+            System.out.println("Authentication object is null");
+        }
+
+        System.out.println("El correo del arrendador: " + correoArrendador);
+        fincaDTO = fincaService.createFinca(fincaDTO, correoArrendador);
+        return ResponseEntity.ok(fincaDTO);
+        //return fincaService.createFinca(fincaDTO);
     }
 
     @GetMapping("/{id}")

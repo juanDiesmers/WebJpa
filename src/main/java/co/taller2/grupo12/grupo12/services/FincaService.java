@@ -48,12 +48,14 @@ public class FincaService {
         }
     }
 
-    public FincaDTO createFinca(FincaDTO fincaDTO) {
-        if (fincaDTO.getId_arrendador() == null) {
+
+    public FincaDTO createFinca(FincaDTO fincaDTO, String correoArrendador) {
+        if ((correoArrendador) == null) {
             throw new IllegalArgumentException("El ID del arrendador no puede ser nulo.");
         } else {
             Finca finca = convertToEntity(fincaDTO);
-            Arrendador arrendador = arrendadorRepository.findById(fincaDTO.getId_arrendador())
+
+            Arrendador arrendador = arrendadorRepository.findByCorreo(correoArrendador)
                     .orElseThrow(() -> new IllegalArgumentException("No se encontró ningún arrendador con el ID proporcionado."));
             finca.setArrendador(arrendador);
             System.out.println("Datos de la entidad Finca antes del guardado:");

@@ -50,6 +50,7 @@ public class AutenticacionController {
                 String token = jwtTokenService.generarToken(usuarioDTO.get());
                 token_dto tokenDTO = new token_dto(token, usuarioDTO.get(), usuarioDTO.get().getTipo(),
                         usuarioDTO.get().getNombres(), usuarioDTO.get().getId());
+                System.out.println("Token generated: " + tokenDTO.getToken());
                 return ResponseEntity.ok(tokenDTO);
             }
         }
