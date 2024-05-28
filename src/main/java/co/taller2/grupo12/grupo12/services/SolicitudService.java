@@ -1,6 +1,7 @@
 package co.taller2.grupo12.grupo12.services;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import co.taller2.grupo12.grupo12.DTOS.SolicitudDTO;
@@ -11,6 +12,7 @@ import co.taller2.grupo12.grupo12.ApplicationRepository.ArrendatarioRepository;
 import co.taller2.grupo12.grupo12.ApplicationRepository.FincaRepository;
 import co.taller2.grupo12.grupo12.ApplicationRepository.SolicitudRepository;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -24,7 +26,9 @@ public class SolicitudService {
     private final FincaRepository fincaRepository;
     private final ModelMapper modelMapper;
 
-    public SolicitudService(SolicitudRepository solicitudRepository, ArrendatarioRepository arrendatarioRepository, FincaRepository fincaRepository, ModelMapper modelMapper) {
+    @Autowired
+    public SolicitudService(SolicitudRepository solicitudRepository, ArrendatarioRepository arrendatarioRepository,
+            FincaRepository fincaRepository, ModelMapper modelMapper) {
         this.solicitudRepository = solicitudRepository;
         this.arrendatarioRepository = arrendatarioRepository;
         this.fincaRepository = fincaRepository;
@@ -45,7 +49,8 @@ public class SolicitudService {
 
     public SolicitudDTO createSolicitud(SolicitudDTO solicitudDTO) {
         Solicitud solicitud = convertToEntity(solicitudDTO);
-        if (solicitud.getArrendatario() != null)  {
+        solicitud.setFecha(null);
+        if (solicitud.getArrendatario() != null) {
             return convertToDTO(solicitudRepository.save(solicitud));
         } else {
             throw new IllegalArgumentException("El arrendatario no puede ser nulo.");
@@ -76,17 +81,19 @@ public class SolicitudService {
 
     private Solicitud convertToEntity(SolicitudDTO solicitudDTO) {
         Solicitud solicitud = modelMapper.map(solicitudDTO, Solicitud.class);
-        
+
         // Obtener el arrendatario a partir del ID
         Arrendatario arrendatario = arrendatarioRepository.findById(solicitudDTO.getIdArrendatario())
-                .orElseThrow(() -> new IllegalArgumentException("No se encontró ningún arrendatario con el ID proporcionado."));
+                .orElseThrow(() -> new IllegalArgumentException(
+                        "No se encontró ningún arrendatario con el ID proporcionado."));
         // Obtener la finca a partir del ID
         Finca finca = fincaRepository.findById(solicitudDTO.getIdFinca())
-                .orElseThrow(() -> new IllegalArgumentException("No se encontró ninguna finca con el ID proporcionado."));
-    
+                .orElseThrow(
+                        () -> new IllegalArgumentException("No se encontró ninguna finca con el ID proporcionado."));
+
         solicitud.setArrendatario(arrendatario);
         solicitud.setFinca(finca);
-    
+
         return solicitud;
     }
 }
