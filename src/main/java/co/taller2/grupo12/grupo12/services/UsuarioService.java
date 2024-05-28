@@ -15,7 +15,6 @@ import co.taller2.grupo12.grupo12.ApplicationRepository.ArrendatarioRepository;
 import co.taller2.grupo12.grupo12.DTOS.UsuarioDTO;
 import co.taller2.grupo12.grupo12.entity.Arrendador;
 import co.taller2.grupo12.grupo12.entity.Arrendatario;
-import java.util.Optional;
 
 @Service
 public class UsuarioService {

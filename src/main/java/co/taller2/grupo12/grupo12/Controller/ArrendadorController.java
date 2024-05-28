@@ -1,6 +1,9 @@
 package co.taller2.grupo12.grupo12.Controller;
 
 import co.taller2.grupo12.grupo12.DTOS.ArrendadorDTO;
+import co.taller2.grupo12.grupo12.DTOS.ComentarioDTO;
+import co.taller2.grupo12.grupo12.DTOS.FincaDTO;
+import co.taller2.grupo12.grupo12.DTOS.UsuarioDTO;
 import co.taller2.grupo12.grupo12.entity.Arrendador;
 import co.taller2.grupo12.grupo12.services.ArrendadorService;
 
@@ -10,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import org.springframework.security.core.Authentication;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -69,6 +73,20 @@ public class ArrendadorController {
     public ResponseEntity<Void> deleteArrendador(@PathVariable Long id) {
         arrendadorService.deleteArrendador(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/misFincas")
+    public ResponseEntity<List<FincaDTO>> obtenerFincasPorArrendador(Authentication authentication) {
+        Long idArrendador = ((UsuarioDTO) authentication.getPrincipal()).getId();
+        List<FincaDTO> fincas = arrendadorService.getFincasPorArrendador(idArrendador);
+        return ResponseEntity.ok(fincas);
+    }
+
+    @GetMapping("/misComentarios")
+    public ResponseEntity<List<ComentarioDTO>> obtenerComentariosPorArrendador(Authentication authentication) {
+        Long idArrendador = ((UsuarioDTO) authentication.getPrincipal()).getId();
+        List<ComentarioDTO> comentarios = arrendadorService.getComentariosPorArrendador(idArrendador);
+        return ResponseEntity.ok(comentarios);
     }
 
 }

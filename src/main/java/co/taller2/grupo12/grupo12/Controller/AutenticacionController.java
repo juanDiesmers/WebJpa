@@ -1,7 +1,6 @@
 package co.taller2.grupo12.grupo12.Controller;
 
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -28,13 +27,6 @@ public class AutenticacionController {
     private UsuarioService usuarioService;
 
     @CrossOrigin
-    @PostMapping(value = "/generarToken", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public token_dto generarToken(@RequestBody UsuarioDTO usuarioDTO) {
-        return new token_dto(jwtTokenService.generarToken(usuarioDTO), usuarioDTO, usuarioDTO.getTipo(),
-                usuarioDTO.getNombres(), usuarioDTO.getId());
-    }
-
-    @CrossOrigin
     @PostMapping(value = "/autenticar-correo-contrasena", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> autenticar(@RequestBody UsuarioDTO credentials) {
         String correo = credentials.getCorreo();
@@ -50,7 +42,6 @@ public class AutenticacionController {
                 String token = jwtTokenService.generarToken(usuarioDTO.get());
                 token_dto tokenDTO = new token_dto(token, usuarioDTO.get(), usuarioDTO.get().getTipo(),
                         usuarioDTO.get().getNombres(), usuarioDTO.get().getId());
-                System.out.println("Token generated: " + tokenDTO.getToken());
                 return ResponseEntity.ok(tokenDTO);
             }
         }

@@ -1,9 +1,15 @@
 package co.taller2.grupo12.grupo12.services;
 
 import co.taller2.grupo12.grupo12.DTOS.ArrendadorDTO;
+import co.taller2.grupo12.grupo12.DTOS.ComentarioDTO;
+import co.taller2.grupo12.grupo12.DTOS.FincaDTO;
 import co.taller2.grupo12.grupo12.entity.Arrendador;
+import co.taller2.grupo12.grupo12.entity.Comentario;
 import co.taller2.grupo12.grupo12.entity.Finca;
 import co.taller2.grupo12.grupo12.ApplicationRepository.ArrendadorRepository;
+import co.taller2.grupo12.grupo12.ApplicationRepository.ComentarioRepository;
+import co.taller2.grupo12.grupo12.ApplicationRepository.FincaRepository;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -153,6 +159,17 @@ public class ArrendadorService {
         } else {
             throw new IllegalStateException("Unexpected principal type: " + principal.getClass().getName());
         }
+    }
+
+    public List<FincaDTO> getFincasPorArrendador(Long idArrendador) {
+        List<Finca> fincas = FincaRepository.findByIdArrendador(idArrendador);
+        return fincas.stream().map(finca -> modelMapper.map(finca, FincaDTO.class)).collect(Collectors.toList());
+    }
+
+    public List<ComentarioDTO> getComentariosPorArrendador(Long idArrendador) {
+        List<Comentario> comentarios = ComentarioRepository.findByIdArrendador(idArrendador);
+        return comentarios.stream().map(comentario -> modelMapper.map(comentario, ComentarioDTO.class))
+                .collect(Collectors.toList());
     }
 
 }

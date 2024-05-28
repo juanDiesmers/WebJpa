@@ -19,18 +19,10 @@ import io.jsonwebtoken.security.Keys;
 
 @Service
 public class JWTTokenService {
-    // @Value("${jwt.secret}")
-    // private String secret = "DES6123";
-
-    // @Value("${jwt.expiration}")
     private long jwtExpiration = 99999999;
-    private Key jwtKey = Keys.secretKeyFor(SignatureAlgorithm.HS512);; // You need to set this key appropriately
+    private Key jwtKey = Keys.secretKeyFor(SignatureAlgorithm.HS512);
 
     public String generarToken(UsuarioDTO usuario) {
-
-        // byte[] secretBytes = secret.getBytes();
-        // Key jwtKey = new SecretKeySpec(secretBytes,
-        // SignatureAlgorithm.HS512.getJcaName());
         ObjectMapper objectMapper = new ObjectMapper();
         String username = "";
         try {
@@ -53,7 +45,7 @@ public class JWTTokenService {
                 .claim("authorities", authorities.stream()
                         .map(GrantedAuthority::getAuthority)
                         .collect(Collectors.toList()))
-                .signWith(jwtKey, SignatureAlgorithm.HS512) // Use your appropriate signing algorithm
+                .signWith(jwtKey, SignatureAlgorithm.HS512)
                 .compact();
     }
 
@@ -66,10 +58,6 @@ public class JWTTokenService {
     }
 
     public Claims decodificarToken(String jwtToken) {
-        // byte[] secretBytes = secret.getBytes();
-        // Key jwtKey = new SecretKeySpec(secretBytes,
-        // SignatureAlgorithm.HS512.getJcaName());
-
         return Jwts.parserBuilder()
                 .setSigningKey(jwtKey)
                 .build()

@@ -10,10 +10,15 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import co.taller2.grupo12.grupo12.entity.Arrendatario;
+import co.taller2.grupo12.grupo12.entity.Solicitud;
 import co.taller2.grupo12.grupo12.DTOS.ArrendatarioDTO;
+import co.taller2.grupo12.grupo12.DTOS.SolicitudDTO;
 import co.taller2.grupo12.grupo12.ApplicationRepository.ArrendatarioRepository;
+import co.taller2.grupo12.grupo12.ApplicationRepository.SolicitudRepository;
+
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ArrendatarioService {
@@ -133,4 +138,11 @@ public class ArrendatarioService {
             throw new IllegalStateException("Unexpected principal type: " + principal.getClass().getName());
         }
     }
+
+    public List<SolicitudDTO> getSolicitudesPorArrendatario(Long idArrendatario) {
+        List<Solicitud> solicitudes = SolicitudRepository.findByIdArrendatario(idArrendatario);
+        return solicitudes.stream().map(solicitud -> modelMapper.map(solicitud, SolicitudDTO.class))
+                .collect(Collectors.toList());
+    }
+
 }

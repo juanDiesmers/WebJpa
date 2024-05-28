@@ -8,8 +8,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import co.taller2.grupo12.grupo12.DTOS.ArrendatarioDTO;
+import co.taller2.grupo12.grupo12.DTOS.SolicitudDTO;
+import co.taller2.grupo12.grupo12.DTOS.UsuarioDTO;
 import co.taller2.grupo12.grupo12.entity.Arrendatario;
 import co.taller2.grupo12.grupo12.services.ArrendatarioService;
+import org.springframework.security.core.Authentication;
 
 import org.springframework.web.bind.annotation.*;
 
@@ -53,4 +56,12 @@ public class ArrendatarioController {
         arrendatarioService.eliminarArrendatarioPorId(id);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/misSolicitudes")
+    public ResponseEntity<List<SolicitudDTO>> obtenerSolicitudesPorArrendatario(Authentication authentication) {
+        Long idArrendatario = ((UsuarioDTO) authentication.getPrincipal()).getId();
+        List<SolicitudDTO> solicitudes = arrendatarioService.getSolicitudesPorArrendatario(idArrendatario);
+        return ResponseEntity.ok(solicitudes);
+    }
+
 }
