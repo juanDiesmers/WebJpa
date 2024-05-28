@@ -4,7 +4,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import co.taller2.grupo12.grupo12.DTOS.FincaDTO;
 import co.taller2.grupo12.grupo12.DTOS.SolicitudDTO;
+import co.taller2.grupo12.grupo12.entity.Arrendador;
 import co.taller2.grupo12.grupo12.entity.Arrendatario;
 import co.taller2.grupo12.grupo12.entity.Finca;
 import co.taller2.grupo12.grupo12.entity.Solicitud;
@@ -40,6 +42,20 @@ public class SolicitudService {
         return StreamSupport.stream(solicitudes.spliterator(), false)
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
+    }
+
+        public List<SolicitudDTO> getAllSolicitudArrendatario(String correoArrendatario) {
+                if ((correoArrendatario) == null) {
+                    throw new IllegalArgumentException("El ID delArrendatario no puede ser nulo.");
+                } else {
+                    Arrendatario arrendatario = arrendatarioRepository.findByCorreo(correoArrendatario)
+                    .orElseThrow(() -> new IllegalArgumentException("No se encontró ningún arrendador con el ID proporcionado."));
+
+                    Iterable<Solicitud> solicitudes = solicitudRepository.findByArrendatarioId(arrendatario.getId_arrendatario());
+                    return StreamSupport.stream(solicitudes.spliterator(), false)
+                            .map(this::convertToDTO)
+                            .collect(Collectors.toList());
+                }
     }
 
     public SolicitudDTO getSolicitudById(Long id) {

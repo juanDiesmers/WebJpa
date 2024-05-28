@@ -47,24 +47,19 @@ public class PagoService {
     }
 
 
-
     public PagoDTO getPagoById(Long id) {
         Optional<Pago> pagoOptional = pagoRepository.findById(id);
         return pagoOptional.map(this::convertToDTO).orElse(null);
     }
 
 
-
-
-    public PagoDTO createPago(PagoDTO pagoDTO, String correoArrendatario) {
+    public PagoDTO createPago(PagoDTO pagoDTO, String correoArrendatario, Long idSolicitud) {
         if ((correoArrendatario) == null) {
             throw new IllegalArgumentException("El ID del arrendatario no puede ser nulo.");
         } else {
             Pago pago = convertToEntity(pagoDTO);
-            Arrendatario arrendatario = arrendatarioRepository.findByCorreo(correoArrendatario)
-                    .orElseThrow(() -> new IllegalArgumentException("No se encontró ningún arrendatario con el ID proporcionado."));
 
-            Solicitud solicitud = solicitudRepository.findByArrendatario(arrendatario)
+            Solicitud solicitud = solicitudRepository.findById(idSolicitud)
                     .orElseThrow(() -> new IllegalArgumentException("No se encontró ninguna solicitud con el ID proporcionado."));
 
             pago.setSolicitud(solicitud);

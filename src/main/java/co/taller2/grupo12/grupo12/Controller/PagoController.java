@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -47,7 +48,8 @@ public class PagoController {
     }
     @PreAuthorize("hasRole('ROLE_ARRENDATARIO')")
     @PostMapping
-    public ResponseEntity<PagoDTO> createPago(@RequestBody PagoDTO pagoDTO, org.springframework.security.core.Authentication authentication) {
+    public ResponseEntity<PagoDTO> createPago(@RequestBody PagoDTO pagoDTO, org.springframework.security.core.Authentication authentication, 
+    @RequestHeader("idSolicitud") Long idSolicitud) {
         String correoArrendatario = null;
         if (authentication != null) {
             Object principal = authentication.getPrincipal();
@@ -62,7 +64,7 @@ public class PagoController {
         } else {
             System.out.println("Authentication object is null");
         }
-        PagoDTO createdPago = pagoService.createPago(pagoDTO, correoArrendatario);
+        PagoDTO createdPago = pagoService.createPago(pagoDTO, correoArrendatario, idSolicitud);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdPago);
     }
 
