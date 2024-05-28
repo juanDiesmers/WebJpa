@@ -3,7 +3,11 @@ package co.taller2.grupo12.grupo12.services;
 import java.util.List;
 
 import co.taller2.grupo12.grupo12.DTOS.ComentarioDTO;
+import co.taller2.grupo12.grupo12.DTOS.PagoDTO;
 import co.taller2.grupo12.grupo12.entity.Comentario;
+import co.taller2.grupo12.grupo12.entity.Estado;
+import co.taller2.grupo12.grupo12.entity.Finca;
+import co.taller2.grupo12.grupo12.entity.Pago;
 import co.taller2.grupo12.grupo12.entity.Solicitud;
 import co.taller2.grupo12.grupo12.entity.Arrendador;
 import co.taller2.grupo12.grupo12.entity.Arrendatario;
@@ -13,6 +17,7 @@ import co.taller2.grupo12.grupo12.ApplicationRepository.ArrendadorRepository;
 import co.taller2.grupo12.grupo12.ApplicationRepository.ArrendatarioRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestHeader;
 
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -47,12 +52,31 @@ public class ComentarioService {
         return comentarioOptional.map(this::convertToDTO).orElse(null);
     }
 
-    public ComentarioDTO createComentario(ComentarioDTO comentarioDTO) {
-        Comentario comentario = convertToEntity(comentarioDTO);
-        if (comentario.getArrendador() != null && comentario.getArrendatario() != null && comentario.getSolicitud() != null) {
-            return convertToDTO(comentarioRepository.save(comentario));
+    public ComentarioDTO createComentario(ComentarioDTO comentarioDTO, String correoArrendatario, Long idSolicitud) {
+        if ((correoArrendatario) == null) {
+            throw new IllegalArgumentException("El ID del arrendatario no puede ser nulo.");
         } else {
-            throw new IllegalArgumentException("Arrendador o arrendatario no pueden ser nulos.");
+            Comentario comentario = convertToEntity(comentarioDTO, idSolicitud);
+
+            Solicitud solicitud = solicitudRepository.findById(idSolicitud)
+                    .orElseThrow(() -> new IllegalArgumentException("No se encontró ninguna solicitud con el ID proporcionado."));
+
+            comentario.setSolicitud(solicitud);
+
+            //Sacar arrendador y arrendatario a partir de la solicitud
+
+            Arrendador arrendador = solicitud.getFinca().getArrendador();
+            Arrendatario arrendatario = solicitud.getArrendatario();
+
+            comentario.setArrendador(arrendador);
+            comentario.setArrendatario(arrendatario);
+            System.out.println("Datos de la entidad Comentario antes del guardado:");
+            System.out.println(comentario);
+            Comentario savedComentario = comentarioRepository.save(comentario);
+            System.out.println("Datos de la entidad Finca después del guardado:");
+            System.out.println(savedComentario);
+
+            return convertToDTO(savedComentario);
         }
     }
 
@@ -78,16 +102,14 @@ public class ComentarioService {
         return comentarioDTO;
     }
 
-    private Comentario convertToEntity(ComentarioDTO comentarioDTO) {
+    private Comentario convertToEntity(ComentarioDTO comentarioDTO, Long idSolicitud) {
+
+        Solicitud solicitud = solicitudRepository.findById(idSolicitud)
+        .orElseThrow(() -> new IllegalArgumentException("No se encontró ninguna solicitud con el ID proporcionado."));
         Comentario comentario = modelMapper.map(comentarioDTO, Comentario.class);
         
-        // Obtener el arrendador y arrendatario a partir de sus IDs
-        Arrendador arrendador = arrendadorRepository.findById(comentarioDTO.getIdArrendador())
-                .orElseThrow(() -> new IllegalArgumentException("No se encontró ningún arrendador con el ID proporcionado."));
-        Arrendatario arrendatario = arrendatarioRepository.findById(comentarioDTO.getIdArrendatario())
-                .orElseThrow(() -> new IllegalArgumentException("No se encontró ningún arrendatario con el ID proporcionado."));
-        Solicitud solicitud = solicitudRepository.findById(comentarioDTO.getId_solicitud())
-                .orElseThrow(() -> new IllegalArgumentException("No se encontró ninguna solicitud con el ID proporcionado."));
+        Arrendador arrendador = solicitud.getFinca().getArrendador();
+        Arrendatario arrendatario = solicitud.getArrendatario();
         
         // Asignar los arrendadores y arrendatarios al comentario
         comentario.setArrendador(arrendador);
