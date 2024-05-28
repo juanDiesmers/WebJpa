@@ -2,8 +2,10 @@ package co.taller2.grupo12.grupo12.Controller;
 
 import java.util.List;
 
+import org.json.JSONObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -43,10 +45,24 @@ public class PagoController {
             return ResponseEntity.notFound().build();
         }
     }
-
+    @PreAuthorize("hasRole('ROLE_ARRENDATARIO')")
     @PostMapping
-    public ResponseEntity<PagoDTO> createPago(@RequestBody PagoDTO pagoDTO) {
-        PagoDTO createdPago = pagoService.createPago(pagoDTO);
+    public ResponseEntity<PagoDTO> createPago(@RequestBody PagoDTO pagoDTO, org.springframework.security.core.Authentication authentication) {
+        String correoArrendatario = null;
+        if (authentication != null) {
+            Object principal = authentication.getPrincipal();
+            if (principal instanceof String) {
+                // Parsear el JSON para obtener el correo
+                String jsonString = (String) principal;
+                JSONObject json = new JSONObject(jsonString);
+                correoArrendatario = json.getString("correo");
+            } else {
+                System.out.println("Authentication principal is not an instance of String");
+            }
+        } else {
+            System.out.println("Authentication object is null");
+        }
+        PagoDTO createdPago = pagoService.createPago(pagoDTO, correoArrendatario);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdPago);
     }
 

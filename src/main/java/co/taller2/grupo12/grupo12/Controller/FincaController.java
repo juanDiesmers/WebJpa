@@ -24,9 +24,33 @@ public class FincaController {
 
     @GetMapping
     public ResponseEntity<List<FincaDTO>> getAllFincas() {
+        System.out.println("Obteniendo fincas del arrendador");
         List<FincaDTO> fincas = fincaService.getAllFincas();
         return ResponseEntity.ok(fincas);
     }
+
+    @GetMapping("/arrendador")
+    public ResponseEntity<List<FincaDTO>> getAllFincasArrendador(org.springframework.security.core.Authentication authentication) {
+        System.out.println("Obteniendo fincas del arrendador");
+        String correoArrendador = null;
+        if (authentication != null) {
+            Object principal = authentication.getPrincipal();
+            if (principal instanceof String) {
+                // Parsear el JSON para obtener el correo
+                String jsonString = (String) principal;
+                JSONObject json = new JSONObject(jsonString);
+                correoArrendador = json.getString("correo");
+            } else {
+                System.out.println("Authentication principal is not an instance of String");
+            }
+        } else {
+            System.out.println("Authentication object is null");
+        }
+        System.out.println("El correo es: " + correoArrendador);
+        List<FincaDTO> fincas = fincaService.getAllFincasArrendador(correoArrendador);
+        return ResponseEntity.ok(fincas);
+    }
+
 
     @PreAuthorize("hasRole('ROLE_ARRENDADOR')")
     @PostMapping

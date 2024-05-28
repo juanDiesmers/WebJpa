@@ -29,15 +29,36 @@ public class FincaService {
 
     public FincaService(FincaRepository fincaRepository, ArrendadorRepository arrendadorRepository, ModelMapper modelMapper) {
         this.fincaRepository = fincaRepository;
+        this.arrendadorRepository = arrendadorRepository;
         this.modelMapper = modelMapper;
     }
 
     public List<FincaDTO> getAllFincas() {
+        System.out.println("PRUEBAAAAAAAAA:");
         Iterable<Finca> fincas = fincaRepository.findAll();
         return StreamSupport.stream(fincas.spliterator(), false)
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
     }
+
+    public List<FincaDTO> getAllFincasArrendador(String correoArrendador) {
+        System.out.println("PRUEBAAAAAAAAA:" + correoArrendador);
+                if ((correoArrendador) == null) {
+                    throw new IllegalArgumentException("El ID del arrendador no puede ser nulo.");
+                } else {
+                    Arrendador arrendador = arrendadorRepository.findByCorreo(correoArrendador)
+                    .orElseThrow(() -> new IllegalArgumentException("No se encontró ningún arrendador con el ID proporcionado."));
+
+                    System.out.println("PRUEBAAAAAAAAA:" + arrendador.getId_arrendador());
+
+                    Iterable<Finca> fincas = fincaRepository.findByArrendadorId(arrendador.getId_arrendador());
+                    return StreamSupport.stream(fincas.spliterator(), false)
+                            .map(this::convertToDTO)
+                            .collect(Collectors.toList());
+                }
+    }
+
+
 
     public FincaDTO getFincaById(Long id) {
         Optional<Finca> fincaOptional = fincaRepository.findById(id);
